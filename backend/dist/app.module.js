@@ -10,6 +10,8 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const config_1 = require("@nestjs/config");
+const boards_module_1 = require("./boards/boards.module");
+const stages_module_1 = require("./stages/stages.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -23,8 +25,11 @@ AppModule = __decorate([
                 password: process.env.TYPEORM_PASSWORD,
                 host: process.env.TYPEORM_HOST,
                 port: process.env.TYPEORM_PORT,
-                synchronized: true
-            })
+                synchronize: true,
+                entities: [__dirname + '/**/*.entity.{js,ts}']
+            }),
+            boards_module_1.BoardsModule,
+            stages_module_1.StagesModule
         ],
     })
 ], AppModule);

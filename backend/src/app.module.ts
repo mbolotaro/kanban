@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import {TypeOrmModule, TypeOrmModuleOptions} from '@nestjs/typeorm'
 import { ConfigModule } from '@nestjs/config';
+import { BoardsModule } from './boards/boards.module';
+import { StagesModule } from './stages/stages.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -11,8 +13,11 @@ import { ConfigModule } from '@nestjs/config';
       password: process.env.TYPEORM_PASSWORD,
       host: process.env.TYPEORM_HOST,
       port: process.env.TYPEORM_PORT,
-      synchronized: true
-    } as TypeOrmModuleOptions)
+      synchronize: true,
+      entities: [__dirname + '/**/*.entity.{js,ts}']
+    } as TypeOrmModuleOptions),
+    BoardsModule,
+    StagesModule
   ],
   
 })
