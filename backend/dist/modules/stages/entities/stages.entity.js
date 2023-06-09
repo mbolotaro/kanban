@@ -16,6 +16,15 @@ const base_entity_1 = require("../../../utils/base-entity");
 const typeorm_1 = require("typeorm");
 const swagger_1 = require("@nestjs/swagger");
 let StageEntity = class StageEntity extends base_entity_1.BaseEntity {
+    constructor(dataStage) {
+        super();
+        this.name = dataStage === null || dataStage === void 0 ? void 0 : dataStage.name;
+        this.id = dataStage === null || dataStage === void 0 ? void 0 : dataStage.id;
+        this.order = dataStage === null || dataStage === void 0 ? void 0 : dataStage.order;
+        this.boardId = dataStage === null || dataStage === void 0 ? void 0 : dataStage.boardId;
+        this.createdAt = dataStage === null || dataStage === void 0 ? void 0 : dataStage.createdAt;
+        this.updatedAt = dataStage === null || dataStage === void 0 ? void 0 : dataStage.updatedAt;
+    }
 };
 __decorate([
     (0, typeorm_1.Column)(),
@@ -45,7 +54,8 @@ __decorate([
     __metadata("design:type", Array)
 ], StageEntity.prototype, "tasks", void 0);
 StageEntity = __decorate([
-    (0, typeorm_1.Entity)('stages')
+    (0, typeorm_1.Entity)('stages'),
+    __metadata("design:paramtypes", [Object])
 ], StageEntity);
 exports.StageEntity = StageEntity;
 //# sourceMappingURL=stages.entity.js.map

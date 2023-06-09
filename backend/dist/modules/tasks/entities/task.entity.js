@@ -15,6 +15,16 @@ const base_entity_1 = require("../../../utils/base-entity");
 const typeorm_1 = require("typeorm");
 const swagger_1 = require("@nestjs/swagger");
 let TaskEntity = class TaskEntity extends base_entity_1.BaseEntity {
+    constructor(dataTask) {
+        super();
+        this.name = dataTask === null || dataTask === void 0 ? void 0 : dataTask.name;
+        this.id = dataTask === null || dataTask === void 0 ? void 0 : dataTask.id;
+        this.order = dataTask === null || dataTask === void 0 ? void 0 : dataTask.order;
+        this.stageId = dataTask === null || dataTask === void 0 ? void 0 : dataTask.stageId;
+        this.createdAt = dataTask === null || dataTask === void 0 ? void 0 : dataTask.createdAt;
+        this.updatedAt = dataTask === null || dataTask === void 0 ? void 0 : dataTask.updatedAt;
+        this.desc = dataTask === null || dataTask === void 0 ? void 0 : dataTask.desc;
+    }
 };
 __decorate([
     (0, typeorm_1.Column)(),
@@ -45,7 +55,8 @@ __decorate([
     __metadata("design:type", stages_entity_1.StageEntity)
 ], TaskEntity.prototype, "stage", void 0);
 TaskEntity = __decorate([
-    (0, typeorm_1.Entity)('tasks')
+    (0, typeorm_1.Entity)('tasks'),
+    __metadata("design:paramtypes", [Object])
 ], TaskEntity);
 exports.TaskEntity = TaskEntity;
 //# sourceMappingURL=task.entity.js.map

@@ -7,4 +7,5 @@ export declare class StageEntity extends BaseEntity {
     boardId: number;
     board: BoardEntity;
     tasks: TaskEntity[];
+    constructor(dataStage?: Partial<StageEntity>);
 }

@@ -28,4 +28,14 @@ export class TaskEntity extends BaseEntity{
     })
     stage: StageEntity
     
+    constructor(dataTask?: Partial<TaskEntity>){
+        super()
+        this.name = dataTask?.name
+        this.id = dataTask?.id
+        this.order = dataTask?.order
+        this.stageId = dataTask?.stageId
+        this.createdAt = dataTask?.createdAt
+        this.updatedAt = dataTask?.updatedAt
+        this.desc = dataTask?.desc
+    }
 }

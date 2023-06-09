@@ -27,4 +27,14 @@ export class StageEntity extends BaseEntity{
     
     @OneToMany(()=> TaskEntity, (task) => task.stage)
     tasks: TaskEntity[]
+
+    constructor(dataStage?: Partial<StageEntity>){
+        super()
+        this.name = dataStage?.name
+        this.id = dataStage?.id
+        this.order = dataStage?.order
+        this.boardId = dataStage?.boardId
+        this.createdAt = dataStage?.createdAt
+        this.updatedAt = dataStage?.updatedAt
+    }
 }

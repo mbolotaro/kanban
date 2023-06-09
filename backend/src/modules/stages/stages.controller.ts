@@ -86,7 +86,7 @@ export class StagesController {
         type: BadRequestSwagger
     })
     //#endregion
-    async updateById(@Param() {id}: FindStageDto, @Body() updateStageDto: UpdateStageDto){
+    async update(@Param() {id}: FindStageDto, @Body() updateStageDto: UpdateStageDto){
         return await this.stagesService.update({id}, updateStageDto)
     }
 
