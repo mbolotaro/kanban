@@ -7,7 +7,7 @@ export declare class TasksService {
     private readonly tasksRepository;
     constructor(tasksRepository: Repository<TaskEntity>);
     create(createTaskDto: CreateTaskDto): Promise<void>;
-    findAll(): Promise<void>;
+    findAll(): Promise<TaskEntity[]>;
     findBy(findTaskDto: FindTaskDto): Promise<TaskEntity>;
     update(findTaskDto: FindTaskDto, updateTaskDto: UpdateTaskDto): Promise<TaskEntity>;
     delete(findTaskDto: FindTaskDto): Promise<void>;

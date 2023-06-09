@@ -25,7 +25,8 @@ async function updateOrderAndSave(currentOrder, newOrder, repository) {
     newOrder = newOrder > entitiesList.length ? entitiesList.length : newOrder;
     newOrder = newOrder <= 0 ? 1 : newOrder;
     if (newOrder !== currentOrder) {
-        await repository.save(repository.merge(entityWithCurrentOrder, { order: 0 }));
+        repository.merge(entityWithCurrentOrder, { order: 0 });
+        await repository.save(entityWithCurrentOrder);
         let saves = [];
         if (newOrder > currentOrder) {
             saves = entitiesList.filter(entity => entity.order > currentOrder && entity.order <= newOrder);
@@ -43,10 +44,12 @@ async function updateOrderAndSave(currentOrder, newOrder, repository) {
         }
         try {
             await repository.save(saves);
-            return await repository.save(repository.merge(entityWithCurrentOrder, { order: newOrder }));
+            repository.merge(entityWithCurrentOrder, { order: newOrder });
+            return repository.save(entityWithCurrentOrder);
         }
         catch (_a) {
-            await repository.save(repository.merge(entityWithCurrentOrder, { order: currentOrder }));
+            repository.merge(entityWithCurrentOrder, { order: currentOrder });
+            await repository.save(entityWithCurrentOrder);
             throw new exceptions_1.BadRequestException(messages_1.default.badRequest);
         }
     }

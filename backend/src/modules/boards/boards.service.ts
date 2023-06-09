@@ -38,9 +38,13 @@ export class BoardsService {
 
     async update(findBoardDto: FindBoardDto, updateBoardDto: UpdateBoardDto){
         const board = await this.findBy(findBoardDto)
-        if(updateBoardDto.name != undefined) await this.boardRepository.save(this.boardRepository.merge(board, {name: updateBoardDto.name}))
-        if(updateBoardDto.order != undefined) {await updateOrderAndSave(board.order, updateBoardDto.order, this.boardRepository)}
-        return board
+        if(updateBoardDto.name != undefined) 
+            this.boardRepository.merge(board, {name: updateBoardDto.name})
+        if(updateBoardDto.order != undefined) {
+            return await updateOrderAndSave(board.order, updateBoardDto.order, this.boardRepository
+        )}
+        
+        return await this.boardRepository.save(board)
     }
  
     async delete(findBoardDto: FindBoardDto){

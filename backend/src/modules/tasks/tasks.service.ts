@@ -25,7 +25,7 @@ export class TasksService {
     }
 
     async findAll(){
-        await this.tasksRepository.find()
+        return await this.tasksRepository.find()
     }
 
     async findBy(findTaskDto: FindTaskDto){
@@ -38,9 +38,13 @@ export class TasksService {
 
     async update(findTaskDto: FindTaskDto, updateTaskDto: UpdateTaskDto){
         const task = await this.findBy(findTaskDto)
-        if(updateTaskDto.name != undefined) await this.tasksRepository.save(this.tasksRepository.merge(task, {name: updateTaskDto.name}))
-        if(updateTaskDto.order != undefined) {await updateOrderAndSave(task.order, updateTaskDto.order, this.tasksRepository)}
-        return task
+        if(updateTaskDto.name != undefined) 
+            this.tasksRepository.merge(task, {name: updateTaskDto.name})
+        
+        if(updateTaskDto.order != undefined) 
+            return await updateOrderAndSave(task.order, updateTaskDto.order, this.tasksRepository)
+        
+        return await this.tasksRepository.save(task)
     }
 
     async delete(findTaskDto: FindTaskDto){

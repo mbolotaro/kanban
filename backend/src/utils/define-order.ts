@@ -1,5 +1,5 @@
 import { BoardEntity } from "src/modules/boards/entities/boards.entity";
-import { StageEntity } from "src/modules/stages/entities/stages.entity";
+import { StageEntity } from "src/modules/stages/entities/stage.entity";
 import { TaskEntity } from "src/modules/tasks/entities/task.entity";
 import { DeepPartial, FindOptionsWhere, Repository } from "typeorm";
 import { BadRequestException } from "@nestjs/common/exceptions";
@@ -34,7 +34,8 @@ export async function updateOrderAndSave<T extends acceptedEntities>(currentOrde
     
     if(newOrder !== currentOrder){
         //mudando ordem para ordem de transição para que não haja conflitos
-        await repository.save(repository.merge(entityWithCurrentOrder, {order: 0} as DeepPartial<T>))
+        repository.merge(entityWithCurrentOrder, {order: 0 } as DeepPartial<T>)
+        await repository.save(entityWithCurrentOrder)
 
         //valores a serem salvos
         let saves: T[] = []
@@ -55,10 +56,12 @@ export async function updateOrderAndSave<T extends acceptedEntities>(currentOrde
         }
         try{
             await repository.save(saves) //salvar mudanças no repositório
-            return await repository.save(repository.merge(entityWithCurrentOrder, {order: newOrder} as DeepPartial<T>)) //salvar entidade selecionada no repositório
+            repository.merge(entityWithCurrentOrder, {order: newOrder} as DeepPartial<T>)
+            return repository.save(entityWithCurrentOrder) //salvar entidade selecionada no repositório
         }
         catch{
-            await repository.save(repository.merge(entityWithCurrentOrder, {order: currentOrder} as DeepPartial<T>))
+            repository.merge(entityWithCurrentOrder, {order: currentOrder} as DeepPartial<T>)
+            await repository.save(entityWithCurrentOrder)
             throw new BadRequestException(messages.badRequest)
         }
     }

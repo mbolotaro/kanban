@@ -14,7 +14,8 @@ async function bootstrap() {
     const config = new swagger_1.DocumentBuilder()
         .setTitle('KANBAN Api')
         .setVersion('0.0.1')
-        .setDescription('All the response schemas also have parameters: <code>id</code>, <code>created_at</code> and <code>updated_at</code>')
+        .setDescription('All the response schemas also have the parameters: <code>id: number</code>, <code>created_at: string </code> and <code>updated_at: string</code>')
+        .setContact('Mateus Bolotaro', 'https://github.com/mbolotaro/', 'mbolotaro@gmail.com')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);

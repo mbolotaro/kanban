@@ -33,7 +33,7 @@ let TasksService = class TasksService {
         }
     }
     async findAll() {
-        await this.tasksRepository.find();
+        return await this.tasksRepository.find();
     }
     async findBy(findTaskDto) {
         try {
@@ -46,11 +46,10 @@ let TasksService = class TasksService {
     async update(findTaskDto, updateTaskDto) {
         const task = await this.findBy(findTaskDto);
         if (updateTaskDto.name != undefined)
-            await this.tasksRepository.save(this.tasksRepository.merge(task, { name: updateTaskDto.name }));
-        if (updateTaskDto.order != undefined) {
-            await (0, define_order_1.updateOrderAndSave)(task.order, updateTaskDto.order, this.tasksRepository);
-        }
-        return task;
+            this.tasksRepository.merge(task, { name: updateTaskDto.name });
+        if (updateTaskDto.order != undefined)
+            return await (0, define_order_1.updateOrderAndSave)(task.order, updateTaskDto.order, this.tasksRepository);
+        return await this.tasksRepository.save(task);
     }
     async delete(findTaskDto) {
         const task = await this.findBy(findTaskDto);

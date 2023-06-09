@@ -1,3 +1,3 @@
-import { StageEntity } from "../../entities/stages.entity";
+import { StageEntity } from "../../entities/stage.entity";
 export declare class UpdateStageDtoSwagger extends StageEntity {
 }

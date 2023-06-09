@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StagesService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
-const stages_entity_1 = require("./entities/stages.entity");
+const stage_entity_1 = require("./entities/stage.entity");
 const typeorm_2 = require("@nestjs/typeorm");
 const messages_1 = require("../../helpers/messages");
 const define_order_1 = require("../../utils/define-order");
@@ -33,7 +33,7 @@ let StagesService = class StagesService {
         }
     }
     async findAll() {
-        await this.stagesRepository.find();
+        return await this.stagesRepository.find();
     }
     async findBy(findStageDto) {
         try {
@@ -46,11 +46,11 @@ let StagesService = class StagesService {
     async update(findStageDto, updateStageDto) {
         const stage = await this.findBy(findStageDto);
         if (updateStageDto.name != undefined)
-            await this.stagesRepository.save(this.stagesRepository.merge(stage, { name: updateStageDto.name }));
+            this.stagesRepository.merge(stage, { name: updateStageDto.name });
         if (updateStageDto.order != undefined) {
             await (0, define_order_1.updateOrderAndSave)(stage.order, updateStageDto.order, this.stagesRepository);
         }
-        return stage;
+        return await this.stagesRepository.save(stage);
     }
     async delete(findStageDto) {
         const board = await this.findBy(findStageDto);
@@ -64,7 +64,7 @@ let StagesService = class StagesService {
 };
 StagesService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_2.InjectRepository)(stages_entity_1.StageEntity)),
+    __param(0, (0, typeorm_2.InjectRepository)(stage_entity_1.StageEntity)),
     __metadata("design:paramtypes", [typeorm_1.Repository])
 ], StagesService);
 exports.StagesService = StagesService;

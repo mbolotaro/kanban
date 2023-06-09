@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskEntity = void 0;
-const stages_entity_1 = require("../../stages/entities/stages.entity");
+const stage_entity_1 = require("../../stages/entities/stage.entity");
 const base_entity_1 = require("../../../utils/base-entity");
 const typeorm_1 = require("typeorm");
 const swagger_1 = require("@nestjs/swagger");
@@ -47,12 +47,12 @@ __decorate([
     __metadata("design:type", Number)
 ], TaskEntity.prototype, "order", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => stages_entity_1.StageEntity, (stage) => stage.tasks),
+    (0, typeorm_1.ManyToOne)(() => stage_entity_1.StageEntity, (stage) => stage.tasks),
     (0, typeorm_1.JoinColumn)({
         name: 'stage_id',
         referencedColumnName: 'id'
     }),
-    __metadata("design:type", stages_entity_1.StageEntity)
+    __metadata("design:type", stage_entity_1.StageEntity)
 ], TaskEntity.prototype, "stage", void 0);
 TaskEntity = __decorate([
     (0, typeorm_1.Entity)('tasks'),

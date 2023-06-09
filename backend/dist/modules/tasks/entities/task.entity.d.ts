@@ -1,4 +1,4 @@
-import { StageEntity } from "../../stages/entities/stages.entity";
+import { StageEntity } from "../../stages/entities/stage.entity";
 import { BaseEntity } from "src/utils/base-entity";
 export declare class TaskEntity extends BaseEntity {
     name: string;
