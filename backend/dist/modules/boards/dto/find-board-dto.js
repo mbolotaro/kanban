@@ -9,21 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseEntity = void 0;
-const typeorm_1 = require("typeorm");
-class BaseEntity {
+exports.FindBoardDto = void 0;
+const class_transformer_1 = require("class-transformer");
+const class_validator_1 = require("class-validator");
+class FindBoardDto {
 }
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('increment'),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsPositive)(),
+    (0, class_transformer_1.Transform)(({ value }) => +value),
     __metadata("design:type", Number)
-], BaseEntity.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.CreateDateColumn)({ name: 'created_at', type: 'timestamp' }),
-    __metadata("design:type", String)
-], BaseEntity.prototype, "createdAt", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)({ name: 'updated_at', type: 'timestamp' }),
-    __metadata("design:type", String)
-], BaseEntity.prototype, "updatedAt", void 0);
-exports.BaseEntity = BaseEntity;
-//# sourceMappingURL=baseEntity.js.map
+], FindBoardDto.prototype, "id", void 0);
+exports.FindBoardDto = FindBoardDto;
+//# sourceMappingURL=find-board-dto.js.map

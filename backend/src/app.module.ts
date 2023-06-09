@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import {TypeOrmModule, TypeOrmModuleOptions} from '@nestjs/typeorm'
 import { ConfigModule } from '@nestjs/config';
-import { BoardsModule } from './boards/boards.module';
-import { StagesModule } from './stages/stages.module';
+import { BoardsModule } from './modules/boards/boards.module';
+import { StagesModule } from './modules/stages/stages.module';
+import { TasksModule } from './modules/tasks/tasks.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -17,7 +19,8 @@ import { StagesModule } from './stages/stages.module';
       entities: [__dirname + '/**/*.entity.{js,ts}']
     } as TypeOrmModuleOptions),
     BoardsModule,
-    StagesModule
+    StagesModule,
+    TasksModule,
   ],
   
 })

@@ -10,8 +10,9 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const config_1 = require("@nestjs/config");
-const boards_module_1 = require("./boards/boards.module");
-const stages_module_1 = require("./stages/stages.module");
+const boards_module_1 = require("./modules/boards/boards.module");
+const stages_module_1 = require("./modules/stages/stages.module");
+const tasks_module_1 = require("./modules/tasks/tasks.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -29,7 +30,8 @@ AppModule = __decorate([
                 entities: [__dirname + '/**/*.entity.{js,ts}']
             }),
             boards_module_1.BoardsModule,
-            stages_module_1.StagesModule
+            stages_module_1.StagesModule,
+            tasks_module_1.TasksModule,
         ],
     })
 ], AppModule);

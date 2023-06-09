@@ -1,5 +1,5 @@
 export declare class BaseEntity {
-    id: string;
+    id: number;
     createdAt: string;
     updatedAt: string;
 }
