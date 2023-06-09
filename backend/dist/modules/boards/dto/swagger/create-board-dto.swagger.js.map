@@ -1,1 +1,1 @@
-{"version":3,"file":"create-board-dto.swagger.js","sourceRoot":"","sources":["../../../../../src/modules/boards/dto/swagger/create-board-dto.swagger.ts"],"names":[],"mappings":";;;AAAA,gEAAwE;AAExE,MAAa,qBAAsB,SAAQ,2BAAW;CAAE;AAAxD,sDAAwD"}
+{"version":3,"file":"create-board-dto.swagger.js","sourceRoot":"","sources":["../../../../../src/modules/boards/dto/swagger/create-board-dto.swagger.ts"],"names":[],"mappings":";;;AAAA,gEAA2D;AAE3D,MAAa,qBAAsB,SAAQ,2BAAW;CAAE;AAAxD,sDAAwD"}

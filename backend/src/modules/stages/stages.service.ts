@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { StageEntity } from './entities/stage.entity';
+import { StageEntity } from './entities/stages.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateStageDto } from './dto/create-stage-dto';
 import messages from 'src/helpers/messages';

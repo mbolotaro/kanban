@@ -11,15 +11,19 @@ async function bootstrap() {
         forbidNonWhitelisted: true,
         transform: true
     }));
+    app.enableCors({
+        origin: ['http://127.0.0.1:3000'],
+        credentials: true
+    });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('KANBAN Api')
         .setVersion('0.0.1')
-        .setDescription('All the response schemas also have the parameters: <code>id: number</code>, <code>created_at: string </code> and <code>updated_at: string</code>')
+        .setDescription('All the response schemas also have the properties: <code>id: number</code>, <code>created_at: string </code> and <code>updated_at: string</code>')
         .setContact('Mateus Bolotaro', 'https://github.com/mbolotaro/', 'mbolotaro@gmail.com')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);
-    await app.listen(3000);
+    await app.listen(3030);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { StageEntity } from './entities/stage.entity';
+import { StageEntity } from './entities/stages.entity';
 import { CreateStageDto } from './dto/create-stage-dto';
 import { FindStageDto } from './dto/find-stage-dto';
 import { UpdateStageDto } from './dto/update-stage-dto';

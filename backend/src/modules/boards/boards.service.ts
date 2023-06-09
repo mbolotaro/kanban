@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { BoardEntity } from './entities/boards.entity';
 import { Repository } from 'typeorm';
-import { CreateBoardDto } from './dto/create-board-dto';
+import { CreateBoardDto } from './dto/create-board-dto'
 import messages from 'src/helpers/messages';
 import { FindBoardDto } from './dto/find-board-dto';
 import { UpdateBoardDto } from './dto/update-board-dto';

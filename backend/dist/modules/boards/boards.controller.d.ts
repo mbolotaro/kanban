@@ -1,7 +1,7 @@
 import { CreateBoardDto } from './dto/create-board-dto';
 import { BoardsService } from './boards.service';
-import { FindBoardDto } from './dto/find-board-dto';
-import { UpdateBoardDto } from './dto/update-board-dto';
+import { FindBoardDto } from 'src/modules/boards/dto/find-board-dto';
+import { UpdateBoardDto } from 'src/modules/boards/dto/update-board-dto';
 export declare class BoardsController {
     private readonly boardsService;
     constructor(boardsService: BoardsService);

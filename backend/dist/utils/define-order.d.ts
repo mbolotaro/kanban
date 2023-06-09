@@ -1,5 +1,5 @@
 import { BoardEntity } from "src/modules/boards/entities/boards.entity";
-import { StageEntity } from "src/modules/stages/entities/stage.entity";
+import { StageEntity } from "src/modules/stages/entities/stages.entity";
 import { TaskEntity } from "src/modules/tasks/entities/task.entity";
 import { Repository } from "typeorm";
 type acceptedEntities = BoardEntity | StageEntity | TaskEntity;

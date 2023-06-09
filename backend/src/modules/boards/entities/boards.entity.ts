@@ -1,4 +1,4 @@
-import { StageEntity } from "../../stages/entities/stage.entity";
+import { StageEntity } from "../../stages/entities/stages.entity";
 import { BaseEntity } from "src/utils/base-entity";
 import { Column, Entity, OneToMany} from "typeorm";
 import {ApiProperty} from '@nestjs/swagger'

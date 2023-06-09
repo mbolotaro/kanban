@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateBoardDto } from './dto/create-board-dto';
 import { BoardsService } from './boards.service';
-import { FindBoardDto } from './dto/find-board-dto';
-import { UpdateBoardDto } from './dto/update-board-dto';
+import { FindBoardDto } from 'src/modules/boards/dto/find-board-dto'
+import { UpdateBoardDto } from 'src/modules/boards/dto/update-board-dto';
 import {ApiOperation, ApiTags, ApiResponse} from '@nestjs/swagger'
-import { CreateBoardDtoSwagger } from './dto/swagger/create-board-dto.swagger';
-import { FindBoardDtoSwagger } from './dto/swagger/find-board-dto.swagger';
-import { UpdateBoardDtoSwagger } from './dto/swagger/update-board-dto.swagger';
+import { CreateBoardDtoSwagger } from 'src/modules/boards/dto/swagger/create-board-dto.swagger'
+import { FindBoardDtoSwagger } from 'src/modules/boards/dto/swagger/find-board-dto.swagger';
+import { UpdateBoardDtoSwagger } from 'src/modules/boards/dto/swagger/update-board-dto.swagger';
 import { BadRequestSwagger } from 'src/helpers/bad-request.swagger';
 import { NotFoundSwagger } from 'src/helpers/not-found.swagger';
 

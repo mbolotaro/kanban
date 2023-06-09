@@ -11,12 +11,12 @@ const common_1 = require("@nestjs/common");
 const stages_controller_1 = require("./stages.controller");
 const stages_service_1 = require("./stages.service");
 const typeorm_1 = require("@nestjs/typeorm");
-const stage_entity_1 = require("./entities/stage.entity");
+const stages_entity_1 = require("./entities/stages.entity");
 let StagesModule = class StagesModule {
 };
 StagesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([stage_entity_1.StageEntity])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([stages_entity_1.StageEntity])],
         controllers: [stages_controller_1.StagesController],
         providers: [stages_service_1.StagesService]
     })

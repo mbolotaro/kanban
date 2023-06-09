@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StagesService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
-const stage_entity_1 = require("./entities/stage.entity");
+const stages_entity_1 = require("./entities/stages.entity");
 const typeorm_2 = require("@nestjs/typeorm");
 const messages_1 = require("../../helpers/messages");
 const define_order_1 = require("../../utils/define-order");
@@ -64,7 +64,7 @@ let StagesService = class StagesService {
 };
 StagesService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_2.InjectRepository)(stage_entity_1.StageEntity)),
+    __param(0, (0, typeorm_2.InjectRepository)(stages_entity_1.StageEntity)),
     __metadata("design:paramtypes", [typeorm_1.Repository])
 ], StagesService);
 exports.StagesService = StagesService;

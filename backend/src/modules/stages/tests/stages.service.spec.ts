@@ -1,6 +1,6 @@
 import {Test, TestingModule} from '@nestjs/testing'
 import { StagesService } from '../stages.service'
-import { StageEntity } from '../entities/stage.entity'
+import { StageEntity } from '../entities/stages.entity'
 import { CreateStageDto } from '../dto/create-stage-dto'
 import { UpdateStageDto } from '../dto/update-stage-dto'
 import { FindStageDto } from '../dto/find-stage-dto'

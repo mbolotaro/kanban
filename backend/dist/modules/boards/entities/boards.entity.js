@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BoardEntity = void 0;
-const stage_entity_1 = require("../../stages/entities/stage.entity");
+const stages_entity_1 = require("../../stages/entities/stages.entity");
 const base_entity_1 = require("../../../utils/base-entity");
 const typeorm_1 = require("typeorm");
 const swagger_1 = require("@nestjs/swagger");
@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:type", Number)
 ], BoardEntity.prototype, "order", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => stage_entity_1.StageEntity, (stage) => stage.board, { cascade: true }),
+    (0, typeorm_1.OneToMany)(() => stages_entity_1.StageEntity, (stage) => stage.board, { cascade: true }),
     __metadata("design:type", Array)
 ], BoardEntity.prototype, "stages", void 0);
 BoardEntity = __decorate([

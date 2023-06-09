@@ -2,9 +2,9 @@ import {Test, TestingModule} from '@nestjs/testing'
 import { BoardsController } from '../boards.controller'
 import { BoardsService } from '../boards.service'
 import { BoardEntity } from '../entities/boards.entity'
-import { CreateBoardDto } from '../dto/create-board-dto'
-import { UpdateBoardDto } from '../dto/update-board-dto'
-import { FindBoardDto } from '../dto/find-board-dto'
+import { CreateBoardDto } from 'src/modules/boards/dto/create-board-dto'
+import { UpdateBoardDto } from 'src/modules/boards/dto/update-board-dto'
+import { FindBoardDto } from 'src/modules/boards/dto/find-board-dto'
 
 const boardList: BoardEntity[] = [
     new BoardEntity({createdAt: '05/19/2023', id: 1, name: 'board-1', order: 0, stages: [], updatedAt: '05/19/2023'}),
