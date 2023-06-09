@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BoardsService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const boards_entity_1 = require("./boards.entity");
+const boards_entity_1 = require("./entities/boards.entity");
 const typeorm_2 = require("typeorm");
 const messages_1 = require("../../helpers/messages");
-const defineOrder_1 = require("../../utils/defineOrder");
+const define_order_1 = require("../../utils/define-order");
 let BoardsService = class BoardsService {
     constructor(boardRepository) {
         this.boardRepository = boardRepository;
@@ -26,7 +26,7 @@ let BoardsService = class BoardsService {
     async create(createBoardDto) {
         const board = this.boardRepository.create(createBoardDto);
         try {
-            await (0, defineOrder_1.defineOrderAndSave)(board, this.boardRepository);
+            return await (0, define_order_1.defineOrderAndSave)(board, this.boardRepository);
         }
         catch (error) {
             throw new common_1.BadRequestException();
@@ -48,14 +48,14 @@ let BoardsService = class BoardsService {
         if (updateBoardDto.name != undefined)
             await this.boardRepository.save(this.boardRepository.merge(board, { name: updateBoardDto.name }));
         if (updateBoardDto.order != undefined) {
-            await (0, defineOrder_1.updateOrderAndSave)(board.order, updateBoardDto.order, this.boardRepository);
+            await (0, define_order_1.updateOrderAndSave)(board.order, updateBoardDto.order, this.boardRepository);
         }
         return board;
     }
     async delete(findBoardDto) {
         const board = await this.findBy(findBoardDto);
         try {
-            await (0, defineOrder_1.deleteEntityAndSave)(board, this.boardRepository);
+            await (0, define_order_1.deleteEntityAndSave)(board, this.boardRepository);
         }
         catch (error) {
             throw new common_1.BadRequestException(messages_1.default.badRequest);

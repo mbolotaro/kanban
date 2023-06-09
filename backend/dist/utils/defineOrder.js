@@ -16,7 +16,7 @@ async function defineOrderAndSave(entity, repository) {
         });
         await repository.save(saves);
     }
-    await repository.save(entity);
+    return await repository.save(entity);
 }
 exports.defineOrderAndSave = defineOrderAndSave;
 async function updateOrderAndSave(currentOrder, newOrder, repository) {
@@ -43,7 +43,7 @@ async function updateOrderAndSave(currentOrder, newOrder, repository) {
         }
         try {
             await repository.save(saves);
-            await repository.save(repository.merge(entityWithCurrentOrder, { order: newOrder }));
+            return await repository.save(repository.merge(entityWithCurrentOrder, { order: newOrder }));
         }
         catch (_a) {
             await repository.save(repository.merge(entityWithCurrentOrder, { order: currentOrder }));

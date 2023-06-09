@@ -18,6 +18,12 @@ const create_board_dto_1 = require("./dto/create-board-dto");
 const boards_service_1 = require("./boards.service");
 const find_board_dto_1 = require("./dto/find-board-dto");
 const update_board_dto_1 = require("./dto/update-board-dto");
+const swagger_1 = require("@nestjs/swagger");
+const create_board_dto_swagger_1 = require("./dto/swagger/create-board-dto.swagger");
+const find_board_dto_swagger_1 = require("./dto/swagger/find-board-dto.swagger");
+const update_board_dto_swagger_1 = require("./dto/swagger/update-board-dto.swagger");
+const bad_request_swagger_1 = require("../../helpers/bad-request.swagger");
+const not_found_swagger_1 = require("../../helpers/not-found.swagger");
 let BoardsController = class BoardsController {
     constructor(boardsService) {
         this.boardsService = boardsService;
@@ -40,6 +46,17 @@ let BoardsController = class BoardsController {
 };
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Create new kanban board' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        description: 'New kanban board created successfully',
+        type: create_board_dto_swagger_1.CreateBoardDtoSwagger
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 400,
+        description: 'Invalid request',
+        type: bad_request_swagger_1.BadRequestSwagger
+    }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_board_dto_1.CreateBoardDto]),
@@ -47,12 +64,30 @@ __decorate([
 ], BoardsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Show all kanban boards' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Showing all kanban boards',
+        type: find_board_dto_swagger_1.FindBoardDtoSwagger,
+        isArray: true
+    }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BoardsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Show a specified kanban board' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Showing a specified kanban board',
+        type: find_board_dto_swagger_1.FindBoardDtoSwagger
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Kanban board not found',
+        type: not_found_swagger_1.NotFoundSwagger
+    }),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [find_board_dto_1.FindBoardDto]),
@@ -60,6 +95,22 @@ __decorate([
 ], BoardsController.prototype, "findById", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a specified kanban board' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Kanban updated',
+        type: update_board_dto_swagger_1.UpdateBoardDtoSwagger
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Kanban not found',
+        type: not_found_swagger_1.NotFoundSwagger
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 400,
+        description: 'Invalid request',
+        type: bad_request_swagger_1.BadRequestSwagger,
+    }),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -68,6 +119,16 @@ __decorate([
 ], BoardsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove a kanban board' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Kanban deleted',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Kanban not found',
+        type: not_found_swagger_1.NotFoundSwagger
+    }),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [find_board_dto_1.FindBoardDto]),
@@ -75,6 +136,7 @@ __decorate([
 ], BoardsController.prototype, "deleteById", null);
 BoardsController = __decorate([
     (0, common_1.Controller)('boards'),
+    (0, swagger_1.ApiTags)('Boards'),
     __metadata("design:paramtypes", [boards_service_1.BoardsService])
 ], BoardsController);
 exports.BoardsController = BoardsController;

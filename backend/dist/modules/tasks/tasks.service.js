@@ -16,9 +16,9 @@ exports.TasksService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const tasks_entity_1 = require("./tasks.entity");
+const task_entity_1 = require("./entities/task.entity");
 const messages_1 = require("../../helpers/messages");
-const defineOrder_1 = require("../../utils/defineOrder");
+const define_order_1 = require("../../utils/define-order");
 let TasksService = class TasksService {
     constructor(tasksRepository) {
         this.tasksRepository = tasksRepository;
@@ -26,7 +26,7 @@ let TasksService = class TasksService {
     async create(createTaskDto) {
         try {
             const task = this.tasksRepository.create(createTaskDto);
-            await (0, defineOrder_1.defineOrderAndSave)(task, this.tasksRepository);
+            await (0, define_order_1.defineOrderAndSave)(task, this.tasksRepository);
         }
         catch (error) {
             throw new common_1.BadRequestException(messages_1.default.badRequest);
@@ -48,14 +48,14 @@ let TasksService = class TasksService {
         if (updateTaskDto.name != undefined)
             await this.tasksRepository.save(this.tasksRepository.merge(task, { name: updateTaskDto.name }));
         if (updateTaskDto.order != undefined) {
-            await (0, defineOrder_1.updateOrderAndSave)(task.order, updateTaskDto.order, this.tasksRepository);
+            await (0, define_order_1.updateOrderAndSave)(task.order, updateTaskDto.order, this.tasksRepository);
         }
         return task;
     }
     async delete(findTaskDto) {
         const task = await this.findBy(findTaskDto);
         try {
-            await (0, defineOrder_1.deleteEntityAndSave)(task, this.tasksRepository);
+            await (0, define_order_1.deleteEntityAndSave)(task, this.tasksRepository);
         }
         catch (_a) {
             throw new common_1.BadRequestException(messages_1.default.badRequest);
@@ -64,7 +64,7 @@ let TasksService = class TasksService {
 };
 TasksService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(tasks_entity_1.TaskEntity)),
+    __param(0, (0, typeorm_1.InjectRepository)(task_entity_1.TaskEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], TasksService);
 exports.TasksService = TasksService;

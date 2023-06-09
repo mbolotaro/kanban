@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BoardEntity } from './boards.entity';
+import { BoardEntity } from './entities/boards.entity';
 import { Repository } from 'typeorm';
 import { CreateBoardDto } from './dto/create-board-dto';
 import messages from 'src/helpers/messages';
 import { FindBoardDto } from './dto/find-board-dto';
 import { UpdateBoardDto } from './dto/update-board-dto';
-import { defineOrderAndSave, deleteEntityAndSave, updateOrderAndSave } from 'src/utils/defineOrder';
+import { defineOrderAndSave, deleteEntityAndSave, updateOrderAndSave } from 'src/utils/define-order';
 
 @Injectable()
 export class BoardsService {
@@ -17,7 +17,7 @@ export class BoardsService {
     async create(createBoardDto: CreateBoardDto){
         const board = this.boardRepository.create(createBoardDto)
         try {
-            await defineOrderAndSave(board, this.boardRepository)
+            return await defineOrderAndSave(board, this.boardRepository)
             
         } catch (error) {
             throw new BadRequestException()

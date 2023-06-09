@@ -7,7 +7,7 @@ export declare class TasksController {
     constructor(tasksService: TasksService);
     create(createTaskDto: CreateTaskDto): Promise<void>;
     findAll(): Promise<void>;
-    findById({ id }: FindTaskDto): Promise<import("./tasks.entity").TaskEntity>;
-    update({ id }: FindTaskDto, updateTaskDto: UpdateTaskDto): Promise<import("./tasks.entity").TaskEntity>;
+    findById({ id }: FindTaskDto): Promise<import("./entities/task.entity").TaskEntity>;
+    update({ id }: FindTaskDto, updateTaskDto: UpdateTaskDto): Promise<import("./entities/task.entity").TaskEntity>;
     deleteById({ id }: FindTaskDto): Promise<void>;
 }

@@ -12,9 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FindStageDto = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
+const dist_1 = require("@nestjs/swagger/dist");
 class FindStageDto {
 }
 __decorate([
+    (0, dist_1.ApiProperty)(),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
     (0, class_transformer_1.Transform)(({ value }) => +value),

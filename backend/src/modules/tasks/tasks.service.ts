@@ -1,9 +1,9 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TaskEntity } from './tasks.entity';
+import { TaskEntity } from './entities/task.entity';
 import messages from 'src/helpers/messages';
-import { defineOrderAndSave, deleteEntityAndSave, updateOrderAndSave } from 'src/utils/defineOrder';
+import { defineOrderAndSave, deleteEntityAndSave, updateOrderAndSave } from 'src/utils/define-order';
 import { FindTaskDto } from './dto/find-task-dto';
 import { CreateTaskDto } from './dto/create-task-dto';
 import { UpdateTaskDto } from './dto/update-task-dto';

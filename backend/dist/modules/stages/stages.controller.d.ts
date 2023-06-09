@@ -7,7 +7,7 @@ export declare class StagesController {
     constructor(stagesService: StagesService);
     create(createStageDto: CreateStageDto): Promise<void>;
     findAll(): Promise<void>;
-    findById({ id }: FindStageDto): Promise<import("./stages.entity").StageEntity>;
-    updateById({ id }: FindStageDto, updateStageDto: UpdateStageDto): Promise<import("./stages.entity").StageEntity>;
+    findById({ id }: FindStageDto): Promise<import("./entities/stages.entity").StageEntity>;
+    updateById({ id }: FindStageDto, updateStageDto: UpdateStageDto): Promise<import("./entities/stages.entity").StageEntity>;
     deleteById({ id }: FindStageDto): Promise<void>;
 }

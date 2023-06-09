@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StagesService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
-const stages_entity_1 = require("./stages.entity");
+const stages_entity_1 = require("./entities/stages.entity");
 const typeorm_2 = require("@nestjs/typeorm");
 const messages_1 = require("../../helpers/messages");
-const defineOrder_1 = require("../../utils/defineOrder");
+const define_order_1 = require("../../utils/define-order");
 let StagesService = class StagesService {
     constructor(stagesRepository) {
         this.stagesRepository = stagesRepository;
@@ -26,7 +26,7 @@ let StagesService = class StagesService {
     async create(createStageDto) {
         try {
             const stage = this.stagesRepository.create(createStageDto);
-            await (0, defineOrder_1.defineOrderAndSave)(stage, this.stagesRepository);
+            await (0, define_order_1.defineOrderAndSave)(stage, this.stagesRepository);
         }
         catch (error) {
             throw new common_1.BadRequestException(messages_1.default.badRequest);
@@ -48,14 +48,14 @@ let StagesService = class StagesService {
         if (updateStageDto.name != undefined)
             await this.stagesRepository.save(this.stagesRepository.merge(stage, { name: updateStageDto.name }));
         if (updateStageDto.order != undefined) {
-            await (0, defineOrder_1.updateOrderAndSave)(stage.order, updateStageDto.order, this.stagesRepository);
+            await (0, define_order_1.updateOrderAndSave)(stage.order, updateStageDto.order, this.stagesRepository);
         }
         return stage;
     }
     async delete(findStageDto) {
         const board = await this.findBy(findStageDto);
         try {
-            await (0, defineOrder_1.deleteEntityAndSave)(board, this.stagesRepository);
+            await (0, define_order_1.deleteEntityAndSave)(board, this.stagesRepository);
         }
         catch (_a) {
             throw new common_1.BadRequestException(messages_1.default.badRequest);

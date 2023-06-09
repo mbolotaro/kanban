@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { TaskEntity } from './tasks.entity';
+import { TaskEntity } from './entities/task.entity';
 import { FindTaskDto } from './dto/find-task-dto';
 import { CreateTaskDto } from './dto/create-task-dto';
 import { UpdateTaskDto } from './dto/update-task-dto';

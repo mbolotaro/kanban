@@ -18,6 +18,12 @@ const stages_service_1 = require("./stages.service");
 const create_stage_dto_1 = require("./dto/create-stage-dto");
 const find_stage_dto_1 = require("./dto/find-stage-dto");
 const update_stage_dto_1 = require("./dto/update-stage-dto");
+const swagger_1 = require("@nestjs/swagger");
+const bad_request_swagger_1 = require("../../helpers/bad-request.swagger");
+const find_stage_dto_swagger_1 = require("./dto/swagger/find-stage-dto.swagger");
+const create_stage_dto_swagger_1 = require("./dto/swagger/create-stage-dto.swagger");
+const not_found_swagger_1 = require("../../helpers/not-found.swagger");
+const update_stage_dto_swagger_1 = require("./dto/swagger/update-stage-dto-swagger");
 let StagesController = class StagesController {
     constructor(stagesService) {
         this.stagesService = stagesService;
@@ -40,6 +46,17 @@ let StagesController = class StagesController {
 };
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a stage of a kanban board' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        description: 'New stage created successfully',
+        type: create_stage_dto_swagger_1.CreateStageDtoSwagger
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 400,
+        description: 'Invalid request',
+        type: bad_request_swagger_1.BadRequestSwagger
+    }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_stage_dto_1.CreateStageDto]),
@@ -47,12 +64,30 @@ __decorate([
 ], StagesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Show all stages of kanban boards' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Showing all stages',
+        type: find_stage_dto_swagger_1.FindStageDtoSwagger,
+        isArray: true
+    }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], StagesController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Show a specified stage of a kanban board' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Showing a specified stage',
+        type: find_stage_dto_swagger_1.FindStageDtoSwagger
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Stage not found',
+        type: not_found_swagger_1.NotFoundSwagger
+    }),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [find_stage_dto_1.FindStageDto]),
@@ -60,6 +95,22 @@ __decorate([
 ], StagesController.prototype, "findById", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a specified stage of a kanban board' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Stage updated',
+        type: update_stage_dto_swagger_1.UpdateStageDtoSwagger
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Stage not found',
+        type: not_found_swagger_1.NotFoundSwagger
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 400,
+        description: 'Invalid request',
+        type: bad_request_swagger_1.BadRequestSwagger
+    }),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -68,6 +119,16 @@ __decorate([
 ], StagesController.prototype, "updateById", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove a specified stage of a kanban board' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Stage deleted',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Stage not found',
+        type: not_found_swagger_1.NotFoundSwagger
+    }),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [find_stage_dto_1.FindStageDto]),
@@ -75,6 +136,7 @@ __decorate([
 ], StagesController.prototype, "deleteById", null);
 StagesController = __decorate([
     (0, common_1.Controller)('stages'),
+    (0, swagger_1.ApiTags)('Stages'),
     __metadata("design:paramtypes", [stages_service_1.StagesService])
 ], StagesController);
 exports.StagesController = StagesController;

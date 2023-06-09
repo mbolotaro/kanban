@@ -11,24 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateTaskDto = void 0;
 const class_validator_1 = require("class-validator");
+const dist_1 = require("@nestjs/swagger/dist");
 class CreateTaskDto {
 }
 __decorate([
+    (0, dist_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateTaskDto.prototype, "name", void 0);
 __decorate([
+    (0, dist_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateTaskDto.prototype, "desc", void 0);
 __decorate([
+    (0, dist_1.ApiProperty)(),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)
 ], CreateTaskDto.prototype, "stageId", void 0);
 __decorate([
+    (0, dist_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsPositive)(),
