@@ -32,7 +32,7 @@ export class StagesService {
             return await this.stagesRepository.findOneByOrFail(findStageDto)
         } catch (error) {
             throw new NotFoundException(messages.notFound('stage', JSON.stringify(findStageDto)))
-        }
+        } 
     }
 
     async update(findStageDto: FindStageDto, updateStageDto: UpdateStageDto){
@@ -52,5 +52,17 @@ export class StagesService {
         } catch {
             throw new BadRequestException(messages.badRequest)
         }
+    }
+
+    async findFullStage(findStageDto: FindStageDto){
+        const stage = await this.stagesRepository.createQueryBuilder('stage')
+        .leftJoinAndSelect('stage.tasks', 'tasks')
+        .where('stage.id = :id', findStageDto)
+        .getOne()
+        
+        if(!stage){ 
+            throw new NotFoundException(messages.notFound('stage', findStageDto))
+        }
+        return stage
     }
 }

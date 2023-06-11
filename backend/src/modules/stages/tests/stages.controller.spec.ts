@@ -5,7 +5,6 @@ import { StageEntity } from '../entities/stages.entity'
 import { CreateStageDto } from '../dto/create-stage-dto'
 import { UpdateStageDto } from '../dto/update-stage-dto'
 import { FindStageDto } from '../dto/find-stage-dto'
-import { BoardEntity } from 'src/modules/boards/entities/boards.entity'
 
 const stageList: StageEntity[] = [
     new StageEntity({createdAt: '05/19/2023', id: 1, name: 'stage-1', order: 0, updatedAt: '05/19/2023'}),

@@ -46,7 +46,7 @@ let TasksController = class TasksController {
 };
 __decorate([
     (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'create a task specifing what stage of a board it will be' }),
+    (0, swagger_1.ApiOperation)({ summary: 'create a task specifing which stage of a board it will be' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
         description: 'New task created successfully',

@@ -18,7 +18,8 @@ TasksModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([task_entity_1.TaskEntity])],
         controllers: [tasks_controller_1.TasksController],
-        providers: [tasks_service_1.TasksService]
+        providers: [tasks_service_1.TasksService],
+        exports: [tasks_service_1.TasksService]
     })
 ], TasksModule);
 exports.TasksModule = TasksModule;

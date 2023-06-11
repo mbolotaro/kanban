@@ -61,6 +61,17 @@ let BoardsService = class BoardsService {
             throw new common_1.BadRequestException(messages_1.default.badRequest);
         }
     }
+    async findFullBoard({ id }) {
+        const board = await this.boardRepository.createQueryBuilder('board')
+            .leftJoinAndSelect('board.stages', 'stages')
+            .leftJoinAndSelect('stages.tasks', 'tasks')
+            .where('board.id = :id', { id })
+            .getOne();
+        if (!board) {
+            throw new common_1.NotFoundException(messages_1.default.notFound('board', id));
+        }
+        return board;
+    }
 };
 BoardsService = __decorate([
     (0, common_1.Injectable)(),

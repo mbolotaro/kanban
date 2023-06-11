@@ -25,7 +25,7 @@ export class StageEntity extends BaseEntity{
     })
     board: BoardEntity
     
-    @OneToMany(()=> TaskEntity, (task) => task.stage)
+    @OneToMany(()=> TaskEntity, (task) => task.stage, {cascade: true})
     tasks: TaskEntity[]
 
     constructor(dataStage?: Partial<StageEntity>){

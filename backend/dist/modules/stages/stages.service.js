@@ -61,6 +61,16 @@ let StagesService = class StagesService {
             throw new common_1.BadRequestException(messages_1.default.badRequest);
         }
     }
+    async findFullStage(findStageDto) {
+        const stage = await this.stagesRepository.createQueryBuilder('stage')
+            .leftJoinAndSelect('stage.tasks', 'tasks')
+            .where('stage.id = :id', findStageDto)
+            .getOne();
+        if (!stage) {
+            throw new common_1.NotFoundException(messages_1.default.notFound('stage', findStageDto));
+        }
+        return stage;
+    }
 };
 StagesService = __decorate([
     (0, common_1.Injectable)(),

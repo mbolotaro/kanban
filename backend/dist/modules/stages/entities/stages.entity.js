@@ -50,7 +50,7 @@ __decorate([
     __metadata("design:type", boards_entity_1.BoardEntity)
 ], StageEntity.prototype, "board", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => task_entity_1.TaskEntity, (task) => task.stage),
+    (0, typeorm_1.OneToMany)(() => task_entity_1.TaskEntity, (task) => task.stage, { cascade: true }),
     __metadata("design:type", Array)
 ], StageEntity.prototype, "tasks", void 0);
 StageEntity = __decorate([

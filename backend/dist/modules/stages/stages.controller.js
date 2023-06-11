@@ -24,6 +24,7 @@ const find_stage_dto_swagger_1 = require("./dto/swagger/find-stage-dto.swagger")
 const create_stage_dto_swagger_1 = require("./dto/swagger/create-stage-dto.swagger");
 const not_found_swagger_1 = require("../../helpers/not-found.swagger");
 const update_stage_dto_swagger_1 = require("./dto/swagger/update-stage-dto-swagger");
+const find_full_stage_dto_swagger_1 = require("./dto/swagger/find-full-stage-dto.swagger");
 let StagesController = class StagesController {
     constructor(stagesService) {
         this.stagesService = stagesService;
@@ -42,6 +43,9 @@ let StagesController = class StagesController {
     }
     async deleteById({ id }) {
         return await this.stagesService.delete({ id });
+    }
+    async findFullStageById({ id }) {
+        return await this.stagesService.findFullStage({ id });
     }
 };
 __decorate([
@@ -134,6 +138,25 @@ __decorate([
     __metadata("design:paramtypes", [find_stage_dto_1.FindStageDto]),
     __metadata("design:returntype", Promise)
 ], StagesController.prototype, "deleteById", null);
+__decorate([
+    (0, common_1.Get)(':id/fullstage'),
+    (0, swagger_1.ApiOperation)({ summary: 'Show a specified stage and it tasks' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Showing a specified stage with it tasks',
+        type: find_full_stage_dto_swagger_1.FindFullStageDtoSwagger,
+        isArray: true
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Stage not found',
+        type: not_found_swagger_1.NotFoundSwagger
+    }),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [find_stage_dto_1.FindStageDto]),
+    __metadata("design:returntype", Promise)
+], StagesController.prototype, "findFullStageById", null);
 StagesController = __decorate([
     (0, common_1.Controller)('stages'),
     (0, swagger_1.ApiTags)('Stages'),

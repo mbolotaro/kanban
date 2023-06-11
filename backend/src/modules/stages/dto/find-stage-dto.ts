@@ -8,4 +8,5 @@ export class FindStageDto {
     @IsPositive()
     @Transform(({value}: {value: string}) => +value)
     id: number
+
 }

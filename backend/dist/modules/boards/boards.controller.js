@@ -24,6 +24,7 @@ const find_board_dto_swagger_1 = require("./dto/swagger/find-board-dto.swagger")
 const update_board_dto_swagger_1 = require("./dto/swagger/update-board-dto.swagger");
 const bad_request_swagger_1 = require("../../helpers/bad-request.swagger");
 const not_found_swagger_1 = require("../../helpers/not-found.swagger");
+const find_full_board_dto_swagger_1 = require("./dto/swagger/find-full-board-dto.swagger");
 let BoardsController = class BoardsController {
     constructor(boardsService) {
         this.boardsService = boardsService;
@@ -42,6 +43,9 @@ let BoardsController = class BoardsController {
     }
     async deleteById({ id }) {
         return await this.boardsService.delete({ id });
+    }
+    async findFullBoard({ id }) {
+        return await this.boardsService.findFullBoard({ id });
     }
 };
 __decorate([
@@ -134,6 +138,25 @@ __decorate([
     __metadata("design:paramtypes", [find_board_dto_1.FindBoardDto]),
     __metadata("design:returntype", Promise)
 ], BoardsController.prototype, "deleteById", null);
+__decorate([
+    (0, common_1.Get)(':id/fullboard'),
+    (0, swagger_1.ApiOperation)({ summary: 'Show a specified board and it stages and tasks' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Showing a specified board with it stages and tasks',
+        type: find_full_board_dto_swagger_1.FindFullBoardDtoSwagger
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Board not found',
+        type: not_found_swagger_1.NotFoundSwagger
+    }),
+    (0, swagger_1.ApiResponse)({}),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [find_board_dto_1.FindBoardDto]),
+    __metadata("design:returntype", Promise)
+], BoardsController.prototype, "findFullBoard", null);
 BoardsController = __decorate([
     (0, common_1.Controller)('boards'),
     (0, swagger_1.ApiTags)('Boards'),

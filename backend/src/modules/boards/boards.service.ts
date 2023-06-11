@@ -36,6 +36,7 @@ export class BoardsService {
         }
     }
 
+
     async update(findBoardDto: FindBoardDto, updateBoardDto: UpdateBoardDto){
         const board = await this.findBy(findBoardDto)
         if(updateBoardDto.name != undefined) 
@@ -54,5 +55,18 @@ export class BoardsService {
         } catch (error) {
             throw new BadRequestException(messages.badRequest)
         }
+    }
+
+    async findFullBoard({id}: FindBoardDto){
+        const board = await this.boardRepository.createQueryBuilder('board')
+        .leftJoinAndSelect('board.stages', 'stages')
+        .leftJoinAndSelect('stages.tasks', 'tasks')
+        .where('board.id = :id', {id})
+        .getOne()
+
+        if(!board){
+            throw new NotFoundException(messages.notFound('board', id)) 
+        }
+        return board
     }
 }

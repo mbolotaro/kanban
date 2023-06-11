@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, NotFoundException } from '@nestjs/common';
 import { CreateBoardDto } from './dto/create-board-dto';
 import { BoardsService } from './boards.service';
 import { FindBoardDto } from 'src/modules/boards/dto/find-board-dto'
@@ -9,12 +9,18 @@ import { FindBoardDtoSwagger } from 'src/modules/boards/dto/swagger/find-board-d
 import { UpdateBoardDtoSwagger } from 'src/modules/boards/dto/swagger/update-board-dto.swagger';
 import { BadRequestSwagger } from 'src/helpers/bad-request.swagger';
 import { NotFoundSwagger } from 'src/helpers/not-found.swagger';
+import { StagesService } from '../stages/stages.service';
+import { FindStageDtoSwagger } from '../stages/dto/swagger/find-stage-dto.swagger';
+import messages from 'src/helpers/messages';
+import { TasksService } from '../tasks/tasks.service';
+import { FindFullBoardDtoSwagger } from './dto/swagger/find-full-board-dto.swagger';
+
 
 @Controller('boards')
 @ApiTags('Boards')
 export class BoardsController {
-    constructor(
-        private readonly boardsService: BoardsService
+    constructor( 
+        private readonly boardsService: BoardsService,
     ){}
     
     @Post()
@@ -107,6 +113,24 @@ export class BoardsController {
     //#endregion
     async deleteById(@Param() {id}: FindBoardDto){
         return await this.boardsService.delete({id})
-    } 
+    }
 
-}
+    @Get(':id/fullboard')
+    @ApiOperation({summary: 'Show a specified board and it stages and tasks'})
+    //#region Responses
+    @ApiResponse({
+        status: 200,
+        description: 'Showing a specified board with it stages and tasks',
+        type: FindFullBoardDtoSwagger
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'Board not found',
+        type: NotFoundSwagger
+    })
+    @ApiResponse({})
+    //#endregion
+    async findFullBoard(@Param() {id}: FindBoardDto){
+        return await this.boardsService.findFullBoard({id})
+    }
+} 

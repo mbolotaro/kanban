@@ -12,13 +12,15 @@ const stages_controller_1 = require("./stages.controller");
 const stages_service_1 = require("./stages.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const stages_entity_1 = require("./entities/stages.entity");
+const tasks_module_1 = require("../tasks/tasks.module");
 let StagesModule = class StagesModule {
 };
 StagesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([stages_entity_1.StageEntity])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([stages_entity_1.StageEntity]), tasks_module_1.TasksModule],
         controllers: [stages_controller_1.StagesController],
-        providers: [stages_service_1.StagesService]
+        providers: [stages_service_1.StagesService],
+        exports: [stages_service_1.StagesService]
     })
 ], StagesModule);
 exports.StagesModule = StagesModule;

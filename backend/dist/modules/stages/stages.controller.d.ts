@@ -10,4 +10,5 @@ export declare class StagesController {
     findById({ id }: FindStageDto): Promise<import("./entities/stages.entity").StageEntity>;
     update({ id }: FindStageDto, updateStageDto: UpdateStageDto): Promise<import("./entities/stages.entity").StageEntity>;
     deleteById({ id }: FindStageDto): Promise<void>;
+    findFullStageById({ id }: FindStageDto): Promise<import("./entities/stages.entity").StageEntity>;
 }

@@ -17,7 +17,7 @@ export class TasksController {
         private readonly tasksService: TasksService
     ){}
     @Post()
-    @ApiOperation({summary: 'create a task specifing what stage of a board it will be'})
+    @ApiOperation({summary: 'create a task specifing which stage of a board it will be'})
     //#region Responses
     @ApiResponse({
         status: 201, 

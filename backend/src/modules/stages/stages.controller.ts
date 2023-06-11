@@ -9,13 +9,15 @@ import { FindStageDtoSwagger } from './dto/swagger/find-stage-dto.swagger';
 import { CreateStageDtoSwagger } from './dto/swagger/create-stage-dto.swagger';
 import { NotFoundSwagger } from 'src/helpers/not-found.swagger';
 import { UpdateStageDtoSwagger } from './dto/swagger/update-stage-dto-swagger';
+import { TasksService } from '../tasks/tasks.service';
+import { FindFullStageDtoSwagger } from './dto/swagger/find-full-stage-dto.swagger';
 
 @Controller('stages')
 @ApiTags('Stages')
 
 export class StagesController {
     constructor(
-        private readonly stagesService: StagesService
+        private readonly stagesService: StagesService,
     ){}
     @Post()
     @ApiOperation({summary: 'Create a stage of a kanban board'})
@@ -103,7 +105,28 @@ export class StagesController {
         type: NotFoundSwagger
     })
     //#endregion
-    async deleteById(@Param() {id}: FindStageDto){
+    async deleteById(@Param() {id} : FindStageDto){
         return await this.stagesService.delete({id})
     }
+
+    @Get(':id/fullstage')
+    @ApiOperation({summary: 'Show a specified stage and it tasks'})
+    @ApiResponse({
+        status: 200, 
+        description: 'Showing a specified stage with it tasks',
+        type: FindFullStageDtoSwagger,
+        isArray: true
+        
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'Stage not found',
+        type: NotFoundSwagger
+        
+    })
+    async findFullStageById(@Param() {id}: FindStageDto){
+        return await this.stagesService.findFullStage({id})
+    }
+
+
 }

@@ -11,4 +11,5 @@ export declare class BoardsService {
     findBy(findBoardDto: FindBoardDto): Promise<BoardEntity>;
     update(findBoardDto: FindBoardDto, updateBoardDto: UpdateBoardDto): Promise<BoardEntity>;
     delete(findBoardDto: FindBoardDto): Promise<void>;
+    findFullBoard({ id }: FindBoardDto): Promise<BoardEntity>;
 }

@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts">
+import { IBoard } from '../interfaces/IBoard';
 import { useBoard } from '../services/useBoard';
-import { onMounted } from 'vue';
 
   export default{
     setup: async() => {
-      console.log(await useBoard.getAll())
+      console.log(await useBoard.getStages(1))
     }
   }
 </script>

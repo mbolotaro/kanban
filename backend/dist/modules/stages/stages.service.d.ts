@@ -11,4 +11,5 @@ export declare class StagesService {
     findBy(findStageDto: FindStageDto): Promise<StageEntity>;
     update(findStageDto: FindStageDto, updateStageDto: UpdateStageDto): Promise<StageEntity>;
     delete(findStageDto: FindStageDto): Promise<void>;
+    findFullStage(findStageDto: FindStageDto): Promise<StageEntity>;
 }
