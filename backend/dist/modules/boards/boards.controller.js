@@ -35,8 +35,8 @@ let BoardsController = class BoardsController {
     async findAll() {
         return await this.boardsService.findAll();
     }
-    async findById({ id }) {
-        return await this.boardsService.findBy({ id });
+    async findOneById({ id }) {
+        return await this.boardsService.findOneBy({ id });
     }
     async update({ id }, updateBoardDto) {
         return await this.boardsService.update({ id }, updateBoardDto);
@@ -96,7 +96,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [find_board_dto_1.FindBoardDto]),
     __metadata("design:returntype", Promise)
-], BoardsController.prototype, "findById", null);
+], BoardsController.prototype, "findOneById", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     (0, swagger_1.ApiOperation)({ summary: 'Update a specified kanban board' }),

@@ -4,9 +4,10 @@ import { StageEntity } from '../entities/stages.entity'
 import { CreateStageDto } from '../dto/create-stage-dto'
 import { UpdateStageDto } from '../dto/update-stage-dto'
 import { FindStageDto } from '../dto/find-stage-dto'
-import { Repository } from 'typeorm'
+import { Repository, SelectQueryBuilder } from 'typeorm'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { NotFoundException } from '@nestjs/common/exceptions'
+import { BadRequestException, NotFoundException } from '@nestjs/common/exceptions'
+import { TaskEntity } from 'src/modules/tasks/entities/task.entity'
 
 const stageList: StageEntity[] = [
     new StageEntity({createdAt: '05/19/2023', id: 1, name: 'stage-1', order: 0, updatedAt: '05/19/2023', boardId: 1}),
@@ -18,11 +19,21 @@ const stageList: StageEntity[] = [
 const findStageDto: FindStageDto = {id: stageList[0].id}
 const createStageDto: CreateStageDto = {name: 'new-stage', order: 5, boardId: 5}
 const updateStageDto: UpdateStageDto = {name: 'stage-1:updated'}
-const newStageEntity: StageEntity = new StageEntity({name: 'new-stage'})
+const newStageEntity: StageEntity = new StageEntity(createStageDto)
 const updatedStageName: StageEntity = new StageEntity({...stageList[0], name: updateStageDto.name})
 const updatedStageOrder: StageEntity = new StageEntity({...stageList[0], order: updateStageDto.order})
 const updatedStage: StageEntity = new StageEntity({...stageList[0], ...updateStageDto})
- 
+const fullStage: StageEntity = new StageEntity({
+    name: 'full-stage', 
+    id: 6, 
+    tasks: [
+        new TaskEntity({name: 'task-1', id: 1}),
+        new TaskEntity({name: 'task-2', id: 2})
+    ],
+    createdAt: '05/19/2023',
+    updatedAt: '05/19/2023'
+})
+
 describe('StagesService', ()=> {
     let stagesService: StagesService
     let stagesRepository: Repository<StageEntity>
@@ -38,7 +49,12 @@ describe('StagesService', ()=> {
                         save: jest.fn().mockResolvedValue(newStageEntity),
                         findOneByOrFail: jest.fn().mockResolvedValue(stageList[0]),
                         merge: jest.fn(),
-                        delete: jest.fn().mockResolvedValue(undefined)
+                        delete: jest.fn().mockResolvedValue(undefined),
+                        createQueryBuilder: jest.fn(()=> ({
+                            leftJoinAndSelect: jest.fn().mockReturnThis(),
+                            where: jest.fn().mockReturnThis(),
+                            getOneOrFail: jest.fn().mockResolvedValueOnce(fullStage)
+                        })) 
                     }
                 }
             ]
@@ -61,19 +77,47 @@ describe('StagesService', ()=> {
             expect(stagesService.findAll).rejects.toThrowError()
         })
     })
-    describe('findOne', ()=> {
+    describe('findOneBy', ()=> {
         it('should return a specified stage successfully', async()=> {
-            const result = await stagesService.findBy(findStageDto)
+            const result = await stagesService.findOneBy(findStageDto)
             expect(stagesRepository.findOneByOrFail).toHaveBeenCalledTimes(1)
             expect(result).toEqual(stageList[0]) 
         })
         it('should throw a not found exception', async()=> {
             jest.spyOn(stagesRepository, 'findOneByOrFail').mockRejectedValueOnce(new Error())
-            expect(stagesService.findBy(findStageDto)).rejects.toThrowError(NotFoundException)
+            expect(stagesService.findOneBy(findStageDto)).rejects.toThrowError(NotFoundException)
         })
         it('should throw an exception', async()=> {
             jest.spyOn(stagesRepository, 'findOneByOrFail').mockRejectedValueOnce(new Error())
-            expect(stagesService.findBy).rejects.toThrowError()
+            expect(stagesService.findOneBy).rejects.toThrowError()
+        })
+    })
+
+    describe('findFullStage', ()=> {
+        it('should return a specified full stage', async()=> {
+            const result = await stagesService.findFullStage({id: fullStage.id})
+            expect(result).toEqual(fullStage)
+        })
+        it('should throw a not found exception', async()=> {
+            jest.spyOn(stagesRepository, 'createQueryBuilder').mockReturnValueOnce({
+                getOneOrFail: jest.fn().mockRejectedValueOnce(new Error())
+            } as any)
+            expect(stagesService.findFullStage({id: fullStage.id})).rejects.toThrowError(NotFoundException)
+        })
+    })
+
+    describe('create', ()=> {
+        it('should create a stage successfully', async() => {
+            const result = await stagesService.create(createStageDto)
+            expect(result).toEqual(newStageEntity)
+        })
+        it('should throw a bad request exception', async() => {
+            jest.spyOn(stagesRepository, 'save').mockRejectedValueOnce(new Error())
+            expect(stagesService.create(createStageDto)).rejects.toThrowError(BadRequestException)
+        })
+        it('should throw an exception', async () => {
+            jest.spyOn(stagesRepository, 'save').mockRejectedValueOnce(new Error())
+            expect(stagesService.create).rejects.toThrowError()
         })
     })
 
@@ -129,4 +173,5 @@ describe('StagesService', ()=> {
             expect(stagesService.delete(findStageDto)).rejects.toThrowError()
         })
     })
+    
 })

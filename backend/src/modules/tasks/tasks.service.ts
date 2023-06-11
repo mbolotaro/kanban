@@ -17,7 +17,7 @@ export class TasksService {
     async create(createTaskDto: CreateTaskDto){
         try {
             const task = this.tasksRepository.create(createTaskDto)
-            await defineOrderAndSave(task, this.tasksRepository)
+            return await defineOrderAndSave(task, this.tasksRepository)
         } catch (error) {
             throw new BadRequestException(messages.badRequest)
         }
@@ -27,7 +27,7 @@ export class TasksService {
         return await this.tasksRepository.find()
     }
 
-    async findBy(findTaskDto: FindTaskDto){
+    async findOneBy(findTaskDto: FindTaskDto){
         try{
             return await this.tasksRepository.findOneByOrFail(findTaskDto)
         } catch (error) {
@@ -36,7 +36,7 @@ export class TasksService {
     }
 
     async update(findTaskDto: FindTaskDto, updateTaskDto: UpdateTaskDto){
-        const task = await this.findBy(findTaskDto)
+        const task = await this.findOneBy(findTaskDto)
         if(updateTaskDto.name != undefined) 
             this.tasksRepository.merge(task, {name: updateTaskDto.name})
         
@@ -47,7 +47,7 @@ export class TasksService {
     }
 
     async delete(findTaskDto: FindTaskDto){
-        const task = await this.findBy(findTaskDto)
+        const task = await this.findOneBy(findTaskDto)
         try{
             await deleteEntityAndSave(task, this.tasksRepository)
         } catch {

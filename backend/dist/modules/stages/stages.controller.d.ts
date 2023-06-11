@@ -5,9 +5,9 @@ import { UpdateStageDto } from './dto/update-stage-dto';
 export declare class StagesController {
     private readonly stagesService;
     constructor(stagesService: StagesService);
-    create(createStageDto: CreateStageDto): Promise<void>;
+    create(createStageDto: CreateStageDto): Promise<import("./entities/stages.entity").StageEntity>;
     findAll(): Promise<import("./entities/stages.entity").StageEntity[]>;
-    findById({ id }: FindStageDto): Promise<import("./entities/stages.entity").StageEntity>;
+    findOneById({ id }: FindStageDto): Promise<import("./entities/stages.entity").StageEntity>;
     update({ id }: FindStageDto, updateStageDto: UpdateStageDto): Promise<import("./entities/stages.entity").StageEntity>;
     deleteById({ id }: FindStageDto): Promise<void>;
     findFullStageById({ id }: FindStageDto): Promise<import("./entities/stages.entity").StageEntity>;

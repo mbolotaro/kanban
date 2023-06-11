@@ -28,7 +28,7 @@ export class BoardsService {
         return await this.boardRepository.find()
     }
 
-    async findBy(findBoardDto: FindBoardDto){
+    async findOneBy(findBoardDto: FindBoardDto){
         try{
             return await this.boardRepository.findOneByOrFail(findBoardDto)
         } catch (error) {
@@ -38,7 +38,7 @@ export class BoardsService {
 
 
     async update(findBoardDto: FindBoardDto, updateBoardDto: UpdateBoardDto){
-        const board = await this.findBy(findBoardDto)
+        const board = await this.findOneBy(findBoardDto)
         if(updateBoardDto.name != undefined) 
             this.boardRepository.merge(board, {name: updateBoardDto.name})
         if(updateBoardDto.order != undefined) {
@@ -49,7 +49,7 @@ export class BoardsService {
     }
  
     async delete(findBoardDto: FindBoardDto){
-        const board = await this.findBy(findBoardDto)
+        const board = await this.findOneBy(findBoardDto)
         try {
             await deleteEntityAndSave(board, this.boardRepository)
         } catch (error) {
@@ -57,16 +57,16 @@ export class BoardsService {
         }
     }
 
-    async findFullBoard({id}: FindBoardDto){
-        const board = await this.boardRepository.createQueryBuilder('board')
-        .leftJoinAndSelect('board.stages', 'stages')
-        .leftJoinAndSelect('stages.tasks', 'tasks')
-        .where('board.id = :id', {id})
-        .getOne()
-
-        if(!board){
-            throw new NotFoundException(messages.notFound('board', id)) 
+    async findFullBoard(findBoardDto: FindBoardDto){
+        try {
+            return await this.boardRepository.createQueryBuilder('board')
+            .leftJoinAndSelect('board.stages', 'stages')
+            .leftJoinAndSelect('stages.tasks', 'tasks')
+            .where('board.id = :id', findBoardDto)
+            .getOneOrFail()
+        } catch {
+           throw new NotFoundException(messages.notFound('board', findBoardDto)) 
         }
-        return board
+        
     }
 }

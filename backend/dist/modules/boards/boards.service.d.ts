@@ -8,8 +8,8 @@ export declare class BoardsService {
     constructor(boardRepository: Repository<BoardEntity>);
     create(createBoardDto: CreateBoardDto): Promise<BoardEntity>;
     findAll(): Promise<BoardEntity[]>;
-    findBy(findBoardDto: FindBoardDto): Promise<BoardEntity>;
+    findOneBy(findBoardDto: FindBoardDto): Promise<BoardEntity>;
     update(findBoardDto: FindBoardDto, updateBoardDto: UpdateBoardDto): Promise<BoardEntity>;
     delete(findBoardDto: FindBoardDto): Promise<void>;
-    findFullBoard({ id }: FindBoardDto): Promise<BoardEntity>;
+    findFullBoard(findBoardDto: FindBoardDto): Promise<BoardEntity>;
 }

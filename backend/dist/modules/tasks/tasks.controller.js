@@ -35,7 +35,7 @@ let TasksController = class TasksController {
         return await this.tasksService.findAll();
     }
     async findById({ id }) {
-        return await this.tasksService.findBy({ id });
+        return await this.tasksService.findOneBy({ id });
     }
     async update({ id }, updateTaskDto) {
         return await this.tasksService.update({ id }, updateTaskDto);

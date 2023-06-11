@@ -20,7 +20,6 @@ StagesModule = __decorate([
         imports: [typeorm_1.TypeOrmModule.forFeature([stages_entity_1.StageEntity]), tasks_module_1.TasksModule],
         controllers: [stages_controller_1.StagesController],
         providers: [stages_service_1.StagesService],
-        exports: [stages_service_1.StagesService]
     })
 ], StagesModule);
 exports.StagesModule = StagesModule;

@@ -6,7 +6,7 @@ import { UpdateTaskDto } from '../dto/update-task-dto'
 import { FindTaskDto } from '../dto/find-task-dto'
 import { Repository } from 'typeorm'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { NotFoundException } from '@nestjs/common/exceptions'
+import { BadRequestException, NotFoundException } from '@nestjs/common/exceptions'
 
 const taskList: TaskEntity[] = [
     new TaskEntity({createdAt: '05/19/2023', id: 1, name: 'task-1', order: 0, updatedAt: '05/19/2023', stageId: 1}),
@@ -18,7 +18,7 @@ const taskList: TaskEntity[] = [
 const findTaskDto: FindTaskDto = {id: taskList[0].id}
 const createTaskDto: CreateTaskDto = {name: 'new-task', order: 5, stageId: 5}
 const updateTaskDto: UpdateTaskDto = {name: 'task-1:updated'}
-const newTaskEntity: TaskEntity = new TaskEntity({name: 'new-task'})
+const newTaskEntity: TaskEntity = new TaskEntity(createTaskDto)
 const updatedTaskName: TaskEntity = new TaskEntity({...taskList[0], name: updateTaskDto.name})
 const updatedTaskOrder: TaskEntity = new TaskEntity({...taskList[0], order: updateTaskDto.order})
 const updatedTask: TaskEntity = new TaskEntity({...taskList[0], ...updateTaskDto})
@@ -63,20 +63,34 @@ describe('TasksService', ()=> {
     })
     describe('findOne', ()=> {
         it('should return a specified task successfully', async()=> {
-            const result = await tasksService.findBy(findTaskDto)
+            const result = await tasksService.findOneBy(findTaskDto)
             expect(tasksRepository.findOneByOrFail).toHaveBeenCalledTimes(1)
             expect(result).toEqual(taskList[0]) 
         })
         it('should throw a not found exception', async()=> {
             jest.spyOn(tasksRepository, 'findOneByOrFail').mockRejectedValueOnce(new Error())
-            expect(tasksService.findBy(findTaskDto)).rejects.toThrowError(NotFoundException)
+            expect(tasksService.findOneBy(findTaskDto)).rejects.toThrowError(NotFoundException)
         })
         it('should throw an exception', async()=> {
             jest.spyOn(tasksRepository, 'findOneByOrFail').mockRejectedValueOnce(new Error())
-            expect(tasksService.findBy).rejects.toThrowError()
+            expect(tasksService.findOneBy).rejects.toThrowError()
         })
     })
 
+    describe('create', () => {
+        it('should create a task successfully', async() => {
+            const result = await tasksService.create(createTaskDto)
+            expect(result).toEqual(newTaskEntity)
+        })
+        it('should throw a bad request exception', async() => {
+            jest.spyOn(tasksRepository, 'save').mockRejectedValueOnce(new Error())
+            expect(tasksService.create(createTaskDto)).rejects.toThrowError(BadRequestException)
+        })
+        it('should throw a bad request exception', async() => {
+            jest.spyOn(tasksRepository, 'save').mockRejectedValueOnce(new Error())
+            expect(tasksService.create(createTaskDto)).rejects.toThrowError()
+        })
+    })
     describe('update', ()=> {
         it('should update a task name successfully', async()=>{
             jest.spyOn(tasksRepository, 'merge').mockReturnValueOnce(updatedTaskName)

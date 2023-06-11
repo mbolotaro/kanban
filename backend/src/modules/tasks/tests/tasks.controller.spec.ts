@@ -31,7 +31,7 @@ describe('TasksController', ()=> {
                 useValue: {
                     create: jest.fn().mockResolvedValue(newTaskEntity),
                     findAll: jest.fn().mockResolvedValue(taskList),
-                    findBy: jest.fn().mockResolvedValue(taskList[0]),
+                    findOneBy: jest.fn().mockResolvedValue(taskList[0]),
                     update: jest.fn().mockResolvedValue(updatedTask),
                     delete: jest.fn().mockResolvedValue(undefined)
                 }
@@ -61,15 +61,15 @@ describe('TasksController', ()=> {
     })
 
     //FIND-BY
-    describe('findById', () => {
+    describe('findOneById', () => {
         it('should return a specified task item successfully', async() => {
             const result = await tasksController.findById(findTaskDto)
-            expect(tasksService.findBy).toHaveBeenCalledTimes(1)
-            expect(tasksService.findBy).toHaveBeenCalledWith(findTaskDto)
+            expect(tasksService.findOneBy).toHaveBeenCalledTimes(1)
+            expect(tasksService.findOneBy).toHaveBeenCalledWith(findTaskDto)
             expect(result).toEqual(taskList[0])
         })
         it('should throw an exception', () => {
-            jest.spyOn(tasksService, 'findBy').mockRejectedValueOnce(new Error())
+            jest.spyOn(tasksService, 'findOneBy').mockRejectedValueOnce(new Error())
             expect(tasksController.findById(findTaskDto)).rejects.toThrowError()
         })
 

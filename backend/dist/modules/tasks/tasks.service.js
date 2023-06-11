@@ -26,7 +26,7 @@ let TasksService = class TasksService {
     async create(createTaskDto) {
         try {
             const task = this.tasksRepository.create(createTaskDto);
-            await (0, define_order_1.defineOrderAndSave)(task, this.tasksRepository);
+            return await (0, define_order_1.defineOrderAndSave)(task, this.tasksRepository);
         }
         catch (error) {
             throw new common_1.BadRequestException(messages_1.default.badRequest);
@@ -35,7 +35,7 @@ let TasksService = class TasksService {
     async findAll() {
         return await this.tasksRepository.find();
     }
-    async findBy(findTaskDto) {
+    async findOneBy(findTaskDto) {
         try {
             return await this.tasksRepository.findOneByOrFail(findTaskDto);
         }
@@ -44,7 +44,7 @@ let TasksService = class TasksService {
         }
     }
     async update(findTaskDto, updateTaskDto) {
-        const task = await this.findBy(findTaskDto);
+        const task = await this.findOneBy(findTaskDto);
         if (updateTaskDto.name != undefined)
             this.tasksRepository.merge(task, { name: updateTaskDto.name });
         if (updateTaskDto.order != undefined)
@@ -52,7 +52,7 @@ let TasksService = class TasksService {
         return await this.tasksRepository.save(task);
     }
     async delete(findTaskDto) {
-        const task = await this.findBy(findTaskDto);
+        const task = await this.findOneBy(findTaskDto);
         try {
             await (0, define_order_1.deleteEntityAndSave)(task, this.tasksRepository);
         }

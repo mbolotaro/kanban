@@ -5,6 +5,8 @@ import { StageEntity } from '../entities/stages.entity'
 import { CreateStageDto } from '../dto/create-stage-dto'
 import { UpdateStageDto } from '../dto/update-stage-dto'
 import { FindStageDto } from '../dto/find-stage-dto'
+import { TaskEntity } from 'src/modules/tasks/entities/task.entity'
+import { NotFoundException } from '@nestjs/common'
 
 const stageList: StageEntity[] = [
     new StageEntity({createdAt: '05/19/2023', id: 1, name: 'stage-1', order: 0, updatedAt: '05/19/2023'}),
@@ -18,6 +20,16 @@ const createStageDto: CreateStageDto = {name: 'new-stage', order: 4, boardId: 1}
 const updateStageDto: UpdateStageDto = {name: 'stage-1:updated'}
 const newStageEntity: StageEntity = new StageEntity({name: 'new-stage'})
 const updatedStage: StageEntity = new StageEntity({...stageList[0], name: updateStageDto.name})
+const fullStage: StageEntity = new StageEntity({
+    name: 'full-stage', 
+    id: 6, 
+    tasks: [
+        new TaskEntity({name: 'task-1', id: 1}),
+        new TaskEntity({name: 'task-2', id: 2})
+    ],
+    createdAt: '05/19/2023',
+    updatedAt: '05/19/2023'
+})
 
 describe('StagesController', ()=> {
     let stagesController: StagesController
@@ -31,9 +43,10 @@ describe('StagesController', ()=> {
                 useValue: {
                     create: jest.fn().mockResolvedValue(newStageEntity),
                     findAll: jest.fn().mockResolvedValue(stageList),
-                    findBy: jest.fn().mockResolvedValue(stageList[0]),
+                    findOneBy: jest.fn().mockResolvedValue(stageList[0]),
                     update: jest.fn().mockResolvedValue(updatedStage),
-                    delete: jest.fn().mockResolvedValue(undefined)
+                    delete: jest.fn().mockResolvedValue(undefined),
+                    findFullStage: jest.fn().mockResolvedValue(fullStage)
                 }
             }]
         }).compile()
@@ -61,16 +74,16 @@ describe('StagesController', ()=> {
     })
 
     //FIND-BY
-    describe('findById', () => {
+    describe('findOneById', () => {
         it('should return a specified stage item successfully', async() => {
-            const result = await stagesController.findById(findStageDto)
-            expect(stagesService.findBy).toHaveBeenCalledTimes(1)
-            expect(stagesService.findBy).toHaveBeenCalledWith(findStageDto)
+            const result = await stagesController.findOneById(findStageDto)
+            expect(stagesService.findOneBy).toHaveBeenCalledTimes(1)
+            expect(stagesService.findOneBy).toHaveBeenCalledWith(findStageDto)
             expect(result).toEqual(stageList[0])
         })
         it('should throw an exception', () => {
-            jest.spyOn(stagesService, 'findBy').mockRejectedValueOnce(new Error())
-            expect(stagesController.findById(findStageDto)).rejects.toThrowError()
+            jest.spyOn(stagesService, 'findOneBy').mockRejectedValueOnce(new Error())
+            expect(stagesController.findOneById(findStageDto)).rejects.toThrowError()
         })
 
     })
@@ -106,16 +119,27 @@ describe('StagesController', ()=> {
     })
 
     //DELETE
-    describe('deleteById', ()=> {
+    describe('deleteById', () => {
         it('should delete a specified stage item successfully', async()=> {
             const result = await stagesController.deleteById(findStageDto)
             expect(stagesService.delete).toHaveBeenCalledTimes(1)
             expect(stagesService.delete).toHaveBeenCalledWith(findStageDto)
             expect(result).toEqual(undefined)
         })
-        it('should throw an exception', ()=> {
+        it('should throw an exception', () => {
             jest.spyOn(stagesService, 'delete').mockRejectedValueOnce(new Error())
             expect(stagesController.deleteById(findStageDto)).rejects.toThrowError()
+        })
+    }),
+
+    describe('findFullStage', ()=> {
+        it('should return a specified full stage', async() => {
+            const result = await stagesService.findFullStage({id: fullStage.id})
+            expect(result).toEqual(fullStage)
+        })
+        it('should throw an exception', async() => {
+            jest.spyOn(stagesService, 'findFullStage').mockRejectedValueOnce(new Error())
+            expect(stagesController.findFullStageById({id: fullStage.id})).rejects.toThrowError()
         })
     })
 })

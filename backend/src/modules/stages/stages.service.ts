@@ -17,7 +17,7 @@ export class StagesService {
     async create(createStageDto: CreateStageDto){
         try {
             const stage = this.stagesRepository.create(createStageDto)
-            await defineOrderAndSave(stage, this.stagesRepository)
+            return await defineOrderAndSave(stage, this.stagesRepository)
         } catch (error) {
             throw new BadRequestException(messages.badRequest)
         }
@@ -27,7 +27,7 @@ export class StagesService {
         return await this.stagesRepository.find()
     }
 
-    async findBy(findStageDto: FindStageDto){
+    async findOneBy(findStageDto: FindStageDto){
         try{
             return await this.stagesRepository.findOneByOrFail(findStageDto)
         } catch (error) {
@@ -36,7 +36,7 @@ export class StagesService {
     }
 
     async update(findStageDto: FindStageDto, updateStageDto: UpdateStageDto){
-        const stage = await this.findBy(findStageDto)
+        const stage = await this.findOneBy(findStageDto)
         if(updateStageDto.name != undefined) 
             this.stagesRepository.merge(stage, {name: updateStageDto.name})
         if(updateStageDto.order != undefined) {
@@ -46,7 +46,7 @@ export class StagesService {
     }
 
     async delete(findStageDto: FindStageDto){
-        const board = await this.findBy(findStageDto)
+        const board = await this.findOneBy(findStageDto)
         try{
             await deleteEntityAndSave(board, this.stagesRepository)
         } catch {
@@ -55,14 +55,14 @@ export class StagesService {
     }
 
     async findFullStage(findStageDto: FindStageDto){
-        const stage = await this.stagesRepository.createQueryBuilder('stage')
-        .leftJoinAndSelect('stage.tasks', 'tasks')
-        .where('stage.id = :id', findStageDto)
-        .getOne()
-        
-        if(!stage){ 
+        try{
+            return await this.stagesRepository.createQueryBuilder('stage')
+            .leftJoinAndSelect('stage.tasks', 'tasks')
+            .where('stage.id = :id', findStageDto)
+            .getOneOrFail()
+            
+        } catch {
             throw new NotFoundException(messages.notFound('stage', findStageDto))
         }
-        return stage
     }
 }

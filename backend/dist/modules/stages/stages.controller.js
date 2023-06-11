@@ -35,8 +35,8 @@ let StagesController = class StagesController {
     async findAll() {
         return await this.stagesService.findAll();
     }
-    async findById({ id }) {
-        return await this.stagesService.findBy({ id });
+    async findOneById({ id }) {
+        return await this.stagesService.findOneBy({ id });
     }
     async update({ id }, updateStageDto) {
         return await this.stagesService.update({ id }, updateStageDto);
@@ -96,7 +96,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [find_stage_dto_1.FindStageDto]),
     __metadata("design:returntype", Promise)
-], StagesController.prototype, "findById", null);
+], StagesController.prototype, "findOneById", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     (0, swagger_1.ApiOperation)({ summary: 'Update a specified stage of a kanban board' }),

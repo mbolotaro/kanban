@@ -62,7 +62,7 @@ export class TasksController {
     })
     //#endregion
     async findById(@Param() {id}: FindTaskDto){
-        return await this.tasksService.findBy({id})
+        return await this.tasksService.findOneBy({id})
     }
 
     @Patch(':id')

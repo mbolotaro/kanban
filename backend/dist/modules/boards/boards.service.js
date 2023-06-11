@@ -35,7 +35,7 @@ let BoardsService = class BoardsService {
     async findAll() {
         return await this.boardRepository.find();
     }
-    async findBy(findBoardDto) {
+    async findOneBy(findBoardDto) {
         try {
             return await this.boardRepository.findOneByOrFail(findBoardDto);
         }
@@ -44,7 +44,7 @@ let BoardsService = class BoardsService {
         }
     }
     async update(findBoardDto, updateBoardDto) {
-        const board = await this.findBy(findBoardDto);
+        const board = await this.findOneBy(findBoardDto);
         if (updateBoardDto.name != undefined)
             this.boardRepository.merge(board, { name: updateBoardDto.name });
         if (updateBoardDto.order != undefined) {
@@ -53,7 +53,7 @@ let BoardsService = class BoardsService {
         return await this.boardRepository.save(board);
     }
     async delete(findBoardDto) {
-        const board = await this.findBy(findBoardDto);
+        const board = await this.findOneBy(findBoardDto);
         try {
             await (0, define_order_1.deleteEntityAndSave)(board, this.boardRepository);
         }
@@ -61,16 +61,17 @@ let BoardsService = class BoardsService {
             throw new common_1.BadRequestException(messages_1.default.badRequest);
         }
     }
-    async findFullBoard({ id }) {
-        const board = await this.boardRepository.createQueryBuilder('board')
-            .leftJoinAndSelect('board.stages', 'stages')
-            .leftJoinAndSelect('stages.tasks', 'tasks')
-            .where('board.id = :id', { id })
-            .getOne();
-        if (!board) {
-            throw new common_1.NotFoundException(messages_1.default.notFound('board', id));
+    async findFullBoard(findBoardDto) {
+        try {
+            return await this.boardRepository.createQueryBuilder('board')
+                .leftJoinAndSelect('board.stages', 'stages')
+                .leftJoinAndSelect('stages.tasks', 'tasks')
+                .where('board.id = :id', findBoardDto)
+                .getOneOrFail();
         }
-        return board;
+        catch (_a) {
+            throw new common_1.NotFoundException(messages_1.default.notFound('board', findBoardDto));
+        }
     }
 };
 BoardsService = __decorate([

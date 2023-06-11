@@ -26,7 +26,7 @@ let StagesService = class StagesService {
     async create(createStageDto) {
         try {
             const stage = this.stagesRepository.create(createStageDto);
-            await (0, define_order_1.defineOrderAndSave)(stage, this.stagesRepository);
+            return await (0, define_order_1.defineOrderAndSave)(stage, this.stagesRepository);
         }
         catch (error) {
             throw new common_1.BadRequestException(messages_1.default.badRequest);
@@ -35,7 +35,7 @@ let StagesService = class StagesService {
     async findAll() {
         return await this.stagesRepository.find();
     }
-    async findBy(findStageDto) {
+    async findOneBy(findStageDto) {
         try {
             return await this.stagesRepository.findOneByOrFail(findStageDto);
         }
@@ -44,7 +44,7 @@ let StagesService = class StagesService {
         }
     }
     async update(findStageDto, updateStageDto) {
-        const stage = await this.findBy(findStageDto);
+        const stage = await this.findOneBy(findStageDto);
         if (updateStageDto.name != undefined)
             this.stagesRepository.merge(stage, { name: updateStageDto.name });
         if (updateStageDto.order != undefined) {
@@ -53,7 +53,7 @@ let StagesService = class StagesService {
         return await this.stagesRepository.save(stage);
     }
     async delete(findStageDto) {
-        const board = await this.findBy(findStageDto);
+        const board = await this.findOneBy(findStageDto);
         try {
             await (0, define_order_1.deleteEntityAndSave)(board, this.stagesRepository);
         }
@@ -62,14 +62,15 @@ let StagesService = class StagesService {
         }
     }
     async findFullStage(findStageDto) {
-        const stage = await this.stagesRepository.createQueryBuilder('stage')
-            .leftJoinAndSelect('stage.tasks', 'tasks')
-            .where('stage.id = :id', findStageDto)
-            .getOne();
-        if (!stage) {
+        try {
+            return await this.stagesRepository.createQueryBuilder('stage')
+                .leftJoinAndSelect('stage.tasks', 'tasks')
+                .where('stage.id = :id', findStageDto)
+                .getOneOrFail();
+        }
+        catch (_a) {
             throw new common_1.NotFoundException(messages_1.default.notFound('stage', findStageDto));
         }
-        return stage;
     }
 };
 StagesService = __decorate([

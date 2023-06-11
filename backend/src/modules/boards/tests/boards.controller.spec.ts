@@ -5,6 +5,8 @@ import { BoardEntity } from '../entities/boards.entity'
 import { CreateBoardDto } from 'src/modules/boards/dto/create-board-dto'
 import { UpdateBoardDto } from 'src/modules/boards/dto/update-board-dto'
 import { FindBoardDto } from 'src/modules/boards/dto/find-board-dto'
+import { StageEntity } from 'src/modules/stages/entities/stages.entity'
+import { TaskEntity } from 'src/modules/tasks/entities/task.entity'
 
 const boardList: BoardEntity[] = [
     new BoardEntity({createdAt: '05/19/2023', id: 1, name: 'board-1', order: 0, stages: [], updatedAt: '05/19/2023'}),
@@ -19,6 +21,28 @@ const updateBoardDto: UpdateBoardDto = {name: 'board-1:updated'}
 const newBoardEntity: BoardEntity = new BoardEntity({name: 'new-board'})
 const updatedBoard: BoardEntity = new BoardEntity({...boardList[0], name: updateBoardDto.name})
 
+const fullBoard: BoardEntity = new BoardEntity({
+    name: 'full-board',
+    id: 6,
+    stages: [
+        new StageEntity({
+            name: 'full-stage-1',
+            id: 1,
+            tasks: [
+                new TaskEntity({name: 'task-1', id: 1}),
+                new TaskEntity({name: 'task-2', id: 2})
+            ]
+        }),
+        new StageEntity({
+            name: 'full-stage-2',
+            id: 2,
+            tasks: []
+        })
+    ],
+    createdAt: '09/15/2023',
+    updatedAt: '09/15/2023'
+})
+
 describe('BoardsController', ()=> {
     let boardsController: BoardsController
     let boardsService: BoardsService
@@ -31,9 +55,10 @@ describe('BoardsController', ()=> {
                 useValue: {
                     create: jest.fn().mockResolvedValue(newBoardEntity),
                     findAll: jest.fn().mockResolvedValue(boardList),
-                    findBy: jest.fn().mockResolvedValue(boardList[0]),
+                    findOneBy: jest.fn().mockResolvedValue(boardList[0]),
                     update: jest.fn().mockResolvedValue(updatedBoard),
-                    delete: jest.fn().mockResolvedValue(undefined)
+                    delete: jest.fn().mockResolvedValue(undefined),
+                    findFullBoard: jest.fn().mockResolvedValue(fullBoard)
                 }
             }]
         }).compile()
@@ -60,19 +85,31 @@ describe('BoardsController', ()=> {
         })
     })
 
-    //FIND-BY
-    describe('findById', () => {
-        it('should return a specified board item successfully', async() => {
-            const result = await boardsController.findById(findBoardDto)
-            expect(boardsService.findBy).toHaveBeenCalledTimes(1)
-            expect(boardsService.findBy).toHaveBeenCalledWith(findBoardDto)
+    //FINDONE-BY-ID
+    describe('findOneById', () => {
+        it('should return a specified board successfully', async() => {
+            const result = await boardsController.findOneById(findBoardDto)
+            expect(boardsService.findOneBy).toHaveBeenCalledTimes(1)
+            expect(boardsService.findOneBy).toHaveBeenCalledWith(findBoardDto)
             expect(result).toEqual(boardList[0])
         })
         it('should throw an exception', () => {
-            jest.spyOn(boardsService, 'findBy').mockRejectedValueOnce(new Error())
-            expect(boardsController.findById(findBoardDto)).rejects.toThrowError()
+            jest.spyOn(boardsService, 'findOneBy').mockRejectedValueOnce(new Error())
+            expect(boardsController.findOneById(findBoardDto)).rejects.toThrowError()
         })
 
+    })
+
+    //FIND-FULL-BOARD
+    describe('findFullBoard', ()=> {
+        it('should return a specified full board successfully', async() => {
+            const result = await boardsController.findFullBoard({id: fullBoard.id})
+            expect(result).toEqual(fullBoard)
+        })
+        it('should throw an exception', async() => {
+            jest.spyOn(boardsService, 'findFullBoard').mockRejectedValueOnce(new Error())
+            expect(boardsController.findFullBoard).rejects.toThrowError()
+        })
     })
 
     //CREATE

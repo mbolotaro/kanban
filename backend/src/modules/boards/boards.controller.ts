@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, NotFoundException } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateBoardDto } from './dto/create-board-dto';
 import { BoardsService } from './boards.service';
 import { FindBoardDto } from 'src/modules/boards/dto/find-board-dto'
@@ -9,10 +9,6 @@ import { FindBoardDtoSwagger } from 'src/modules/boards/dto/swagger/find-board-d
 import { UpdateBoardDtoSwagger } from 'src/modules/boards/dto/swagger/update-board-dto.swagger';
 import { BadRequestSwagger } from 'src/helpers/bad-request.swagger';
 import { NotFoundSwagger } from 'src/helpers/not-found.swagger';
-import { StagesService } from '../stages/stages.service';
-import { FindStageDtoSwagger } from '../stages/dto/swagger/find-stage-dto.swagger';
-import messages from 'src/helpers/messages';
-import { TasksService } from '../tasks/tasks.service';
 import { FindFullBoardDtoSwagger } from './dto/swagger/find-full-board-dto.swagger';
 
 
@@ -70,8 +66,8 @@ export class BoardsController {
         type: NotFoundSwagger
     })
     //#endregion
-    async findById(@Param() {id}: FindBoardDto){
-        return await this.boardsService.findBy({id})
+    async findOneById(@Param() {id}: FindBoardDto){
+        return await this.boardsService.findOneBy({id})
     }
 
     @Patch(':id')
