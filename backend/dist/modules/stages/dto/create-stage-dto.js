@@ -35,5 +35,11 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], CreateStageDto.prototype, "boardId", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsHexColor)(),
+    __metadata("design:type", String)
+], CreateStageDto.prototype, "color", void 0);
 exports.CreateStageDto = CreateStageDto;
 //# sourceMappingURL=create-stage-dto.js.map

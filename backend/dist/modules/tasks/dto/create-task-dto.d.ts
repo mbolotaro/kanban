@@ -3,4 +3,5 @@ export declare class CreateTaskDto {
     desc?: string;
     stageId: number;
     order: number;
+    color?: string;
 }

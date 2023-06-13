@@ -21,6 +21,10 @@ export class TaskEntity extends BaseEntity{
     @ApiProperty()
     order: number
 
+    @Column()
+    @ApiProperty()
+    color: string
+
     @ManyToOne(()=> StageEntity, (stage) => stage.tasks)
     @JoinColumn({
         name: 'stage_id',
@@ -37,5 +41,6 @@ export class TaskEntity extends BaseEntity{
         this.createdAt = dataTask?.createdAt
         this.updatedAt = dataTask?.updatedAt
         this.desc = dataTask?.desc
+        this.color = dataTask?.color
     }
 }

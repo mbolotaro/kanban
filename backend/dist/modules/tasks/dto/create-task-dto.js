@@ -39,5 +39,11 @@ __decorate([
     (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)
 ], CreateTaskDto.prototype, "order", void 0);
+__decorate([
+    (0, dist_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsHexColor)(),
+    __metadata("design:type", String)
+], CreateTaskDto.prototype, "color", void 0);
 exports.CreateTaskDto = CreateTaskDto;
 //# sourceMappingURL=create-task-dto.js.map

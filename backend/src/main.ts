@@ -11,14 +11,13 @@ async function bootstrap() {
     transform: true
   }))
   app.enableCors({
-    origin: ['http://127.0.0.1:3000'],
-    credentials: true 
+    origin: ['http://127.0.0.1:3000', 'http://localhost:3000'],
   })
 
   //swagger config
   const config = new DocumentBuilder()
   .setTitle('KANBAN Api')
-  .setVersion('0.0.2')
+  .setVersion('0.0.4')
   .setDescription('All the response schemas also have the properties: <code>id: number</code>, <code>created_at: string </code> and <code>updated_at: string</code>')
   .setContact('Mateus Bolotaro', 'https://github.com/mbolotaro/', 'mbolotaro@gmail.com')
   .build()

@@ -42,6 +42,11 @@ __decorate([
     __metadata("design:type", Number)
 ], StageEntity.prototype, "boardId", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], StageEntity.prototype, "color", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => boards_entity_1.BoardEntity, (board) => board.stages),
     (0, typeorm_1.JoinColumn)({
         name: 'board_id',

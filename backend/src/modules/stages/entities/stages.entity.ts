@@ -18,6 +18,10 @@ export class StageEntity extends BaseEntity{
     @ApiProperty()
     boardId: number
 
+    @Column()
+    @ApiProperty()
+    color: string
+    
     @ManyToOne(()=> BoardEntity, (board) => board.stages)
     @JoinColumn({
         name: 'board_id',

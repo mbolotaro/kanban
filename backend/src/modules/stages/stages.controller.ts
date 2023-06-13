@@ -68,6 +68,27 @@ export class StagesController {
         return await this.stagesService.findOneBy({id})
     }
 
+    @Get(':id/full')
+    @ApiOperation({summary: 'Show a specified stage and it tasks'})
+    //#region Response
+    @ApiResponse({
+        status: 200, 
+        description: 'Showing a specified stage with it tasks',
+        type: FindFullStageDtoSwagger,
+        isArray: true
+        
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'Stage not found',
+        type: NotFoundSwagger
+        
+    })
+    //#endregion
+    async findFullStageById(@Param() {id}: FindStageDto){
+        return await this.stagesService.findFullStage({id})
+    }
+
     @Patch(':id')
     @ApiOperation({summary: 'Update a specified stage of a kanban board'})
     //#region Responses
@@ -107,25 +128,4 @@ export class StagesController {
     async deleteById(@Param() {id} : FindStageDto){
         return await this.stagesService.delete({id})
     }
-
-    @Get(':id/fullstage')
-    @ApiOperation({summary: 'Show a specified stage and it tasks'})
-    @ApiResponse({
-        status: 200, 
-        description: 'Showing a specified stage with it tasks',
-        type: FindFullStageDtoSwagger,
-        isArray: true
-        
-    })
-    @ApiResponse({
-        status: 404,
-        description: 'Stage not found',
-        type: NotFoundSwagger
-        
-    })
-    async findFullStageById(@Param() {id}: FindStageDto){
-        return await this.stagesService.findFullStage({id})
-    }
-
-
 }

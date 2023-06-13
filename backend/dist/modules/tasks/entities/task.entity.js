@@ -24,6 +24,7 @@ let TaskEntity = class TaskEntity extends base_entity_1.BaseEntity {
         this.createdAt = dataTask === null || dataTask === void 0 ? void 0 : dataTask.createdAt;
         this.updatedAt = dataTask === null || dataTask === void 0 ? void 0 : dataTask.updatedAt;
         this.desc = dataTask === null || dataTask === void 0 ? void 0 : dataTask.desc;
+        this.color = dataTask === null || dataTask === void 0 ? void 0 : dataTask.color;
     }
 };
 __decorate([
@@ -46,6 +47,11 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
 ], TaskEntity.prototype, "order", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], TaskEntity.prototype, "color", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => stages_entity_1.StageEntity, (stage) => stage.tasks),
     (0, typeorm_1.JoinColumn)({

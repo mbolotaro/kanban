@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger"
 import { Transform } from "class-transformer"
-import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString} from "class-validator"
+import { IsHexColor, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString} from "class-validator"
 
 export class CreateStageDto {
     @ApiProperty()
@@ -19,4 +19,9 @@ export class CreateStageDto {
     @IsNumber()
     @IsNotEmpty()
     boardId: number
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsHexColor()
+    color?: string
 }

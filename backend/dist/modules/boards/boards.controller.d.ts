@@ -8,7 +8,7 @@ export declare class BoardsController {
     create(createBoardDto: CreateBoardDto): Promise<import("./entities/boards.entity").BoardEntity>;
     findAll(): Promise<import("./entities/boards.entity").BoardEntity[]>;
     findOneById({ id }: FindBoardDto): Promise<import("./entities/boards.entity").BoardEntity>;
+    findFullBoard({ id }: FindBoardDto): Promise<import("./entities/boards.entity").BoardEntity>;
     update({ id }: FindBoardDto, updateBoardDto: UpdateBoardDto): Promise<import("./entities/boards.entity").BoardEntity>;
     deleteById({ id }: FindBoardDto): Promise<void>;
-    findFullBoard({ id }: FindBoardDto): Promise<import("./entities/boards.entity").BoardEntity>;
 }

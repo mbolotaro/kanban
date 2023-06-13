@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber, IsPositive, IsOptional } from "class-validator";
+import { IsString, IsNotEmpty, IsNumber, IsPositive, IsOptional, IsHexColor } from "class-validator";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger/dist";
 
 export class CreateTaskDto{
@@ -23,4 +23,8 @@ export class CreateTaskDto{
     @IsPositive()
     order: number
     
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsHexColor()
+    color?: string
 }

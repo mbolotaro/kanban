@@ -11,7 +11,6 @@ import { BadRequestSwagger } from 'src/helpers/bad-request.swagger';
 import { NotFoundSwagger } from 'src/helpers/not-found.swagger';
 import { FindFullBoardDtoSwagger } from './dto/swagger/find-full-board-dto.swagger';
 
-
 @Controller('boards')
 @ApiTags('Boards')
 export class BoardsController {
@@ -20,7 +19,6 @@ export class BoardsController {
     ){}
     
     @Post()
-    
     @ApiOperation({summary: 'Create new kanban board'})
     //#region Responses
     @ApiResponse({
@@ -70,6 +68,25 @@ export class BoardsController {
         return await this.boardsService.findOneBy({id})
     }
 
+    @Get(':id/full')
+    @ApiOperation({summary: 'Show a specified board and it stages and tasks'})
+    //#region Responses
+    @ApiResponse({
+        status: 200,
+        description: 'Showing a specified board with it stages and tasks',
+        type: FindFullBoardDtoSwagger
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'Board not found',
+        type: NotFoundSwagger
+    })
+    @ApiResponse({})
+    //#endregion
+    async findFullBoard(@Param() {id}: FindBoardDto){
+        return await this.boardsService.findFullBoard({id})
+    }
+
     @Patch(':id')
     @ApiOperation({summary: 'Update a specified kanban board'})
     //#region Responses
@@ -109,24 +126,5 @@ export class BoardsController {
     //#endregion
     async deleteById(@Param() {id}: FindBoardDto){
         return await this.boardsService.delete({id})
-    }
-
-    @Get(':id/fullboard')
-    @ApiOperation({summary: 'Show a specified board and it stages and tasks'})
-    //#region Responses
-    @ApiResponse({
-        status: 200,
-        description: 'Showing a specified board with it stages and tasks',
-        type: FindFullBoardDtoSwagger
-    })
-    @ApiResponse({
-        status: 404,
-        description: 'Board not found',
-        type: NotFoundSwagger
-    })
-    @ApiResponse({})
-    //#endregion
-    async findFullBoard(@Param() {id}: FindBoardDto){
-        return await this.boardsService.findFullBoard({id})
     }
 } 
