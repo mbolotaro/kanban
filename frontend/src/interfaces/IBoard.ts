@@ -1,5 +1,8 @@
-export interface IBoard{
-    id: number,
+import { IDefault } from "./IDefault";
+import { IStage } from "./IStage";
+
+export interface IBoard extends IDefault{
     name: string,
-    order: number
+    order?: number,
+    stages: IStage[]
 }

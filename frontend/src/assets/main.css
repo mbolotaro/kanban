@@ -1,0 +1,14 @@
+*{
+    font-family: 'MontSerrat';
+    margin: 0;
+}
+
+@font-face{
+    font-family: 'MontSerrat';
+    src: url('./fonts/Montserrat-Regular.ttf')
+}
+
+@font-face{
+    font-family: 'MontSerratExtraBold';
+    src: url('./fonts/Montserrat-Bold.ttf')
+}

@@ -21,9 +21,9 @@ export class TaskEntity extends BaseEntity{
     @ApiProperty()
     order: number
 
-    @Column()
+    @Column({nullable: true})
     @ApiProperty()
-    color: string
+    color?: string
 
     @ManyToOne(()=> StageEntity, (stage) => stage.tasks)
     @JoinColumn({

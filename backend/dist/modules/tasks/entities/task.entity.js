@@ -48,7 +48,7 @@ __decorate([
     __metadata("design:type", Number)
 ], TaskEntity.prototype, "order", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], TaskEntity.prototype, "color", void 0);

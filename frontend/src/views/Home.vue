@@ -1,16 +1,46 @@
 <template>
-  <div>
-
-  </div>
+  <v-container>
+    {{ board.name }}
+    <v-skeleton-loader 
+      type="card"
+    >
+      <task-card :dataTask="board.stages[0].tasks.find(task => task.id == 11)" v-if="!loading" :loading="loading"></task-card>
+      
+    </v-skeleton-loader>
+    
+  </v-container>
 </template>
 
 <script lang="ts">
-import { IBoard } from '../interfaces/IBoard';
 import { useBoard } from '../services/useBoard';
-
+import TaskCard from '../components/TaskCard.vue'
+import { ref, Ref, onBeforeMount } from 'vue';
+import { IBoard } from '../interfaces/IBoard';
   export default{
-    setup: async() => {
-      console.log(await useBoard.getStages(1))
+  components: { TaskCard },
+    name: 'Home',
+    setup(){
+      const loading: Ref<boolean> = ref(true)
+      const board: Ref<IBoard> = ref({
+        name: 'not defined',
+        order: 0,
+        createdAt: '',
+        updatedAt: '',
+        id: 0,
+        stages: [{tasks: [{name: ''}]}],
+      } as IBoard)
+      onBeforeMount(async()=> {
+        try{
+          board.value = (await useBoard.getFullBoard(1)).data
+          loading.value = false
+        }
+        catch{
+
+        }
+        
+      })
+      return {board, loading}
     }
   }
+  
 </script>

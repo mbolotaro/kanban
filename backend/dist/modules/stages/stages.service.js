@@ -45,10 +45,11 @@ let StagesService = class StagesService {
     }
     async update(findStageDto, updateStageDto) {
         const stage = await this.findOneBy(findStageDto);
-        if (updateStageDto.name != undefined)
-            this.stagesRepository.merge(stage, { name: updateStageDto.name });
+        const order = updateStageDto.order;
+        delete updateStageDto.order;
+        this.stagesRepository.merge(stage, updateStageDto);
         if (updateStageDto.order != undefined) {
-            await (0, define_order_1.updateOrderAndSave)(stage.order, updateStageDto.order, this.stagesRepository);
+            await (0, define_order_1.updateOrderAndSave)(stage.order, order, this.stagesRepository);
         }
         return await this.stagesRepository.save(stage);
     }

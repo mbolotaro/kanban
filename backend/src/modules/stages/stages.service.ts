@@ -37,10 +37,11 @@ export class StagesService {
 
     async update(findStageDto: FindStageDto, updateStageDto: UpdateStageDto){
         const stage = await this.findOneBy(findStageDto)
-        if(updateStageDto.name != undefined) 
-            this.stagesRepository.merge(stage, {name: updateStageDto.name})
+        const order = updateStageDto.order
+        delete updateStageDto.order
+        this.stagesRepository.merge(stage, updateStageDto)
         if(updateStageDto.order != undefined) {
-            await updateOrderAndSave(stage.order, updateStageDto.order, this.stagesRepository)
+            await updateOrderAndSave(stage.order, order, this.stagesRepository)
         }
         return await this.stagesRepository.save(stage)
     }

@@ -5,7 +5,7 @@ export declare class TaskEntity extends BaseEntity {
     desc?: string;
     stageId: number;
     order: number;
-    color: string;
+    color?: string;
     stage: StageEntity;
     constructor(dataTask?: Partial<TaskEntity>);
 }

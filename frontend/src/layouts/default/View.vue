@@ -4,6 +4,8 @@
   </v-main>
 </template>
 
-<script lang="ts" setup>
-  //
+<script lang="ts">
+  export default{
+    name: 'View'
+  }
 </script>

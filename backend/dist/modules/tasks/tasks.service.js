@@ -45,10 +45,12 @@ let TasksService = class TasksService {
     }
     async update(findTaskDto, updateTaskDto) {
         const task = await this.findOneBy(findTaskDto);
-        if (updateTaskDto.name != undefined)
-            this.tasksRepository.merge(task, { name: updateTaskDto.name });
-        if (updateTaskDto.order != undefined)
-            return await (0, define_order_1.updateOrderAndSave)(task.order, updateTaskDto.order, this.tasksRepository);
+        const order = updateTaskDto.order;
+        delete updateTaskDto.order;
+        this.tasksRepository.merge(task, updateTaskDto);
+        if (updateTaskDto.order != undefined) {
+            await (0, define_order_1.updateOrderAndSave)(task.order, order, this.tasksRepository);
+        }
         return await this.tasksRepository.save(task);
     }
     async delete(findTaskDto) {
