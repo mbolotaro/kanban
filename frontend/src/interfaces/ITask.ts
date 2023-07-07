@@ -4,7 +4,6 @@ export interface ITask extends IDefault{
     name: string,
     order: number,
     stageId: number
-    color: string,
     desc: string,
 }
 

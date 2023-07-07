@@ -1,13 +1,8 @@
 <template>
   <v-container>
     {{ board.name }}
-    <v-skeleton-loader 
-      type="card"
-    >
-      <task-card :dataTask="board.stages[0].tasks.find(task => task.id == 11)" v-if="!loading" :loading="loading"></task-card>
-      
-    </v-skeleton-loader>
-    
+      <task-card :dataTask="board.stages.find(stage => stage.id == 8).tasks.find(task => task.id == 11)" v-if="!loading" :loading="loading"/>
+      <color-section/>
   </v-container>
 </template>
 
@@ -16,8 +11,9 @@ import { useBoard } from '../services/useBoard';
 import TaskCard from '../components/TaskCard.vue'
 import { ref, Ref, onBeforeMount } from 'vue';
 import { IBoard } from '../interfaces/IBoard';
+import ColorSection from '../components/ColorSection/index.vue';
   export default{
-  components: { TaskCard },
+  components: { TaskCard, ColorSection },
     name: 'Home',
     setup(){
       const loading: Ref<boolean> = ref(true)
@@ -27,7 +23,6 @@ import { IBoard } from '../interfaces/IBoard';
         createdAt: '',
         updatedAt: '',
         id: 0,
-        stages: [{tasks: [{name: ''}]}],
       } as IBoard)
       onBeforeMount(async()=> {
         try{

@@ -5,7 +5,6 @@ export interface IStage extends IDefault{
     name: string,
     order: number,
     boardId: number,
-    color: string,
     tasks: ITask[],
     
 }
