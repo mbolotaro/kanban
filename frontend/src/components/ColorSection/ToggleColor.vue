@@ -14,19 +14,16 @@
              </v-btn-toggle>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
     import {Ref, ref, watchEffect } from 'vue';
     import {palette} from '../../palette'
     import {useUpdateColor} from '../../store/updateColor'
-    export default {
-        setup(){
-            const isActive: Ref<boolean> = ref(false)
-            const updateColor = useUpdateColor()
-            const colors = Object.values(palette)
-            watchEffect(() => {
-                isActive.value = updateColor.isSetting
-            })
-            return {isActive, updateColor, colors}
-        }
-}
+
+    const isActive: Ref<boolean> = ref(false)
+    const updateColor = useUpdateColor()
+    const colors = Object.values(palette)
+    
+    watchEffect(() => {
+        isActive.value = updateColor.isSetting
+    })
 </script>

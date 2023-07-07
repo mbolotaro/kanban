@@ -27,30 +27,21 @@
     
  </template>
  
- <script lang="ts">
- 
- import {reactive, watchEffect } from 'vue';
- import {palette} from '../../palette'
- import {useUpdateColor} from '../../store/updateColor'
-import vuetify from '../../plugins/vuetify';
-import ToggleColor from './ToggleColor.vue';
+ <script lang="ts" setup>
+    import {reactive, watchEffect } from 'vue';
+    import {useUpdateColor} from '../../store/updateColor'
+    import vuetify from '../../plugins/vuetify';
+    import ToggleColor from './ToggleColor.vue';
 
- export default {
-  components: { ToggleColor },
-    setup(){
-        const updateColor = useUpdateColor()
-        const state = reactive({
-            isActive: updateColor.isSetting,
-            vuetify
-        })
-        const colors = Object.values(palette)
-        const isActive = false
-        watchEffect(() => {
-            state.isActive = updateColor.isSetting
-        })
-        return {isActive, colors, state, updateColor, vuetify}
-    }
-    }
+    const updateColor = useUpdateColor()
+    const state = reactive({
+        isActive: updateColor.isSetting,
+        vuetify
+    })
+
+    watchEffect(() => {
+        state.isActive = updateColor.isSetting
+    })
  
  </script>
  

@@ -33,40 +33,33 @@
     
   </template>
   
-<script lang="ts">
+<script lang="ts" setup>
   import { ITask } from '../interfaces/ITask'
-  import { onMounted, reactive, ref } from 'vue'
+  import { onMounted, reactive } from 'vue'
   import { useUpdateColor } from '../store/updateColor'
   import { Input } from '../utils/input'
-  export default {
-    props: {
-      dataTask: {type: Object as () => ITask, required: true}
-    },
-    setup(props: {dataTask: ITask}){
-      const updateColor = useUpdateColor()
-      const state = reactive({
-        inputs: {
-          name: new Input('name', props.dataTask.id),
-          desc: new Input('desc', props.dataTask.id)
-        },
-        
-      })
-      let activeModal = ref(false)
-      
-      onMounted(()=>{
-          state.inputs.name.value = props.dataTask.name
-          props.dataTask.desc? 
-          state.inputs.desc.value = props.dataTask.desc:
-          state.inputs.desc.value = ''
-      })
   
-      function toggleModal(value: boolean | null = null){
-        updateColor.toggle()
-        updateColor.setEntity(props.dataTask, 'task')
-      }
-      
-      return {state, toggleModal, activeModal}
-    }
+  const props = defineProps({
+    dataTask: {type: Object as () => ITask, required: true}
+  })
+  const updateColor = useUpdateColor()
+  const state = reactive({
+    inputs: {
+      name: new Input('name', props.dataTask.id),
+      desc: new Input('desc', props.dataTask.id)
+    },
+  })
+  
+  onMounted(()=>{
+      state.inputs.name.value = props.dataTask.name
+      props.dataTask.desc? 
+      state.inputs.desc.value = props.dataTask.desc:
+      state.inputs.desc.value = ''
+  })
+
+  function toggleModal(){
+    updateColor.toggle()
+    updateColor.setEntity(props.dataTask, 'task')
   }
 </script>
   
